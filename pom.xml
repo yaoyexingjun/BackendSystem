@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>lovo</groupId>
     <artifactId>BackendSystem</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -35,6 +34,7 @@
             <layout>default</layout>
         </repository>
     </repositories>
+
     <!-- 继承父包 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -42,6 +42,7 @@
         <version>2.1.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <!-- spring-boot的web启动的jar包 -->
     <dependencies>
         <dependency>
@@ -53,9 +54,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
-
         </dependency>
-        <!-- 热启动-->
+        <!-- 热启动 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -66,12 +66,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--jpa的jar包 ，操作数据库的，类似hibernate-->
+        <!-- jpa的jar包 ，操作数据库的，类似hibernate -->
        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -82,47 +81,40 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.13</version>
         </dependency>
-
-        <!--thymeleaf模板jar，是很不错的html数据传递取值，类似jsp的jstl-->
+        <!-- thymeleaf模板jar，是很不错的html数据传递取值，类似jsp的jstl -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-
         </dependency>
-
-        <!-- fastJson json数组有关的 -->
+        <!-- fastJson，json数组有关的 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.1.26</version>
         </dependency>
-
-        <!-- 使用 Jackson 把 Java 对象转换成 JSON 字串 -->
+        <!-- 使用Jackson把Java对象转换成JSON字串 -->
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.11</version>
         </dependency>
-
-        <!-- mysql数据库驱动-->
+        <!-- mysql数据库驱动 -->
        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.21</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
     </dependencies>
 
-    <!--maven的插件-->
+    <!-- maven的插件 -->
     <build>
         <plugins>
             <plugin>
@@ -131,7 +123,7 @@
             </plugin>
         </plugins>
         <defaultGoal>compile</defaultGoal>
-        <!-- 配置java版本 不配置的话默认父类配置的是1.6-->
+        <!-- 配置java版本 不配置的话默认父类配置的是1.6 -->
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -141,7 +133,6 @@
                         <target>1.8</target>
                     </configuration>
                 </plugin>
-
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
@@ -156,7 +147,6 @@
                         </execution>
                     </executions>
                 </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
