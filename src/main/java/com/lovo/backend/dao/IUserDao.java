@@ -40,6 +40,6 @@ public interface IUserDao extends CrudRepository<UserEntity,String> {
      * 查询所有用户
      * @return 用户对象集合
      */
-    @Query("from UserEntity group by userState")
+    @Query("from UserEntity order by userState")
     public List<UserEntity> findAllUser();
 }
