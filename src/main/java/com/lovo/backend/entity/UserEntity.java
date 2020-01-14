@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class UserEntity {
     /**用户id*/
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "user_id" ,length = 32)
     private String userId;
     /**用户名*/
