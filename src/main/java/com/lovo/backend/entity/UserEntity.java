@@ -1,10 +1,11 @@
 package com.lovo.backend.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "sys_user")
-public class UserEntity {
+public class UserEntity implements Serializable {
     /**用户id*/
     @Id
 
@@ -35,10 +36,10 @@ public class UserEntity {
     @Column(name = "user_state")
     private  int userState = 1;//0代表未通过审核未冻结，1代表通过审核未冻结，2代表通过审核已冻结
     /**营业执照*/
-    @Column(name = "user_business_license_img",columnDefinition = "text")
+    @Column(name = "user_business_license_img",columnDefinition = "mediumtext")
     private String userBusinessLicenseImg;
     /**身份证照片*/
-    @Column(name = "user_userImg",columnDefinition = "text")
+    @Column(name = "user_userImg",columnDefinition = "mediumtext")
     private String userImg;
 
     public String getUserId() {
