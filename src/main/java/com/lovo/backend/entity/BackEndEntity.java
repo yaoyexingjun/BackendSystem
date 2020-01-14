@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "sys_back_end")
-public class backEndEntity {
+public class BackEndEntity {
     /**
      * 后端退货id
      */
