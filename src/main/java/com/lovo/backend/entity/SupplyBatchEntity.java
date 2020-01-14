@@ -37,8 +37,8 @@ public class SupplyBatchEntity {
     /**
      * 供货进度（当前记录）
      */
-    @Column(name = "sb_supplyRecord",length = 32)
-    private String supplyRecord;
+    @Column(name = "sb_supplyRecord")
+    private int supplyRecord;
 
     public long getSupplyBatchId() {
         return supplyBatchId;
@@ -72,11 +72,11 @@ public class SupplyBatchEntity {
         this.totalPrice = totalPrice;
     }
 
-    public String getSupplyRecord() {
+    public int getSupplyRecord() {
         return supplyRecord;
     }
 
-    public void setSupplyRecord(String supplyStatus) {
+    public void setSupplyRecord(int supplyStatus) {
         this.supplyRecord = supplyStatus;
     }
 }
