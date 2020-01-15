@@ -3,6 +3,7 @@ package com.lovo.backend.controller;
 import com.lovo.backend.entity.UserEntity;
 import com.lovo.backend.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,17 +23,17 @@ public class UserController {
         userService.updateUserPwdAndUserPhone(userId,userPwd,userPhone);
     }
     @RequestMapping("updateUserState")
-    public void updateUserState(String userId, Integer userState){
-        userService.updateUserState(userId,userState);
+    public void updateUserState(String userId, Integer userState,String causerFreeze,String thawReason){
+        userService.updateUserState(userId,userState,causerFreeze,thawReason);
     }
     @RequestMapping("login")
     public UserEntity findByUserNameAndUserPwd(String userName, String userPwd){
        return userService.findByUserNameAndUserPwd(userName,userPwd);
     }
     @RequestMapping("findAll")
-    public List<UserEntity> findAllUser(){
-        List<UserEntity> list = userService.findAllUser();
-        return list;
+    public List<UserEntity> findAllUserByState(int userState, Pageable pageable){
+       // return userService.findAllUser();
+        return null;
     }
     @RequestMapping("findById")
     public UserEntity findById(String userId){
