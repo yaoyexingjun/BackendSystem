@@ -29,6 +29,12 @@ public class SupplyBatchEntity {
     private String supplyBatch;
 
     /**
+     * 供货订单编号
+     */
+    @Column(name = "sb_supplyOrderCode",length = 48)
+    private String supplyOrderCode;
+
+    /**
      * 总金额
      */
     @Column(name = "sb_totalPrice")
@@ -39,6 +45,7 @@ public class SupplyBatchEntity {
      */
     @Column(name = "sb_supplyRecord")
     private int supplyRecord;
+
 
     public long getSupplyBatchId() {
         return supplyBatchId;
@@ -64,6 +71,14 @@ public class SupplyBatchEntity {
         this.supplyBatch = supplyBatch;
     }
 
+    public String getSupplyOrderCode() {
+        return supplyOrderCode;
+    }
+
+    public void setSupplyOrderCode(String supplyOrderCode) {
+        this.supplyOrderCode = supplyOrderCode;
+    }
+
     public int getTotalPrice() {
         return totalPrice;
     }
@@ -76,7 +91,7 @@ public class SupplyBatchEntity {
         return supplyRecord;
     }
 
-    public void setSupplyRecord(int supplyStatus) {
-        this.supplyRecord = supplyStatus;
+    public void setSupplyRecord(int supplyRecord) {
+        this.supplyRecord = supplyRecord;
     }
 }
