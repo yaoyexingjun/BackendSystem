@@ -64,4 +64,12 @@ public interface IUserService {
      * @return 总页数
      */
     public int getTotalPage(int pageSize);
+
+    /**
+     * 根据用户状态及每页记录数得到总页数
+     * @param userState 用户状态
+     * @param pageSize 每页记录数
+     * @return 相应用户状态下的总页数
+     */
+    public int getTotalNumberByUserState(int userState,int pageSize);
 }
