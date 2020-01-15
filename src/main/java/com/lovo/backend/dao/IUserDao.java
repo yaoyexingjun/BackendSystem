@@ -59,4 +59,12 @@ public interface IUserDao extends CrudRepository<UserEntity,String> {
      */
     @Query("select count (userId) from UserEntity ")
     public int getTotalNumber();
+
+    /**
+     * 根据用户状态查询用户的总记录数
+     * @param userState
+     * @return 总记录数
+     */
+    @Query("select count (userId) from UserEntity where userState=?1")
+    public int getTotalNumberByUserState(int userState);
 }

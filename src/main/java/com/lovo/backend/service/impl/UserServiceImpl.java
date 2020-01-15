@@ -52,6 +52,12 @@ public class UserServiceImpl implements IUserService {
 
 
     public int getTotalPage(int pageSize) {
-        return (userDao.getTotalNumber()+pageSize-1)/pageSize;
+        //return (userDao.getTotalNumber()+pageSize-1)/pageSize;
+        return ((int)userDao.count()+pageSize-1)/pageSize;
+    }
+
+
+    public int getTotalNumberByUserState(int userState, int pageSize) {
+        return (userDao.getTotalNumberByUserState(userState)+pageSize-1)/pageSize;
     }
 }
