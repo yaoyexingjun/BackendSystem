@@ -1,9 +1,11 @@
 package com.lovo.backend.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 后端退货实体类
+ *
  */
 @Entity
 @Table(name = "sys_back_end")
@@ -13,7 +15,7 @@ public class BackEndEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ideb_backEndId",length = 40)
+    @Column(name = "eb_backEndId",length = 40)
     private long backEndId;
     /**
      * 退货订单编号
@@ -28,7 +30,7 @@ public class BackEndEntity {
     /**
      * 退货时间
      */
-    @Column(name = "eb_backTime",length = 40,columnDefinition = "datetime")
+    @Column(name = "eb_backTime",length = 40,columnDefinition = "date")
     private String backTime;
     /**
      * 退货订单状态
@@ -45,6 +47,16 @@ public class BackEndEntity {
      */
     @Column(name = "eb_supplyName",length = 80)
     private String supplyName;
+    /**
+     * 退货原因
+     */
+    @Column(name = "eb_cause")
+    private String cause;
+
+    /**
+     * 供货订单号
+     */
+    private String supplyOrderCode;
 
     public long getBackEndId() {
         return backEndId;
@@ -100,5 +112,22 @@ public class BackEndEntity {
 
     public void setSupplyName(String supplyName) {
         this.supplyName = supplyName;
+    }
+
+    public String getCause() {
+        return cause;
+    }
+
+    public void setCause(String cause) {
+        this.cause = cause;
+    }
+
+
+    public String getSupplyOrderCode() {
+        return supplyOrderCode;
+    }
+
+    public void setSupplyOrderCode(String supplyOrderCode) {
+        this.supplyOrderCode = supplyOrderCode;
     }
 }

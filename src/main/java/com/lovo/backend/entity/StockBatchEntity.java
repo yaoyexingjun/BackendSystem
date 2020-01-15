@@ -29,6 +29,12 @@ public class StockBatchEntity {
     private String batch;
 
     /**
+     * 供货订单编号
+     */
+    @Column(name = "sb_supplyOrderCode",length = 48)
+    private String supplyOrderCode;
+
+    /**
      * 采购数量
      */
     @Column(name = "sb_purchaseNum")
@@ -74,6 +80,14 @@ public class StockBatchEntity {
 
     public void setBatch(String batch) {
         this.batch = batch;
+    }
+
+    public String getSupplyOrderCode() {
+        return supplyOrderCode;
+    }
+
+    public void setSupplyOrderCode(String supplyOrderCode) {
+        this.supplyOrderCode = supplyOrderCode;
     }
 
     public int getPurchaseNum() {

@@ -3,6 +3,9 @@ package com.lovo.backend.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * 用户实体
+ */
 @Entity
 @Table(name = "sys_user")
 public class UserEntity implements Serializable {
@@ -41,6 +44,12 @@ public class UserEntity implements Serializable {
     /**身份证照片*/
     @Column(name = "user_userImg",columnDefinition = "mediumtext")
     private String userImg;
+    /**冻结原因*/
+    @Column(name = "user_causer_freeze",length = 80)
+    private String causerFreeze;
+    /**解除冻结原因*/
+    @Column(name = "user_thaw_reason",length = 80)
+    private String thawReason;
 
     public String getUserId() {
         return userId;
@@ -128,5 +137,21 @@ public class UserEntity implements Serializable {
 
     public void setUserImg(String userImg) {
         this.userImg = userImg;
+    }
+
+    public String getCauserFreeze() {
+        return causerFreeze;
+    }
+
+    public void setCauserFreeze(String causerFreeze) {
+        this.causerFreeze = causerFreeze;
+    }
+
+    public String getThawReason() {
+        return thawReason;
+    }
+
+    public void setThawReason(String thawReason) {
+        this.thawReason = thawReason;
     }
 }
