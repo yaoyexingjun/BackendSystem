@@ -2,6 +2,8 @@ package com.lovo.backend.util;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 拆分、组合字符串工具类
  */
@@ -24,14 +26,14 @@ public class SplitCombineStringUtil {
      * @param rule 组合规则
      * @return 结果字符串
      */
-    public static String combineString(String[] targetString,String rule){
+    public static String combineString(List<String> targetString, String rule){
         String resultString = "";
-        for(int i = 0;i < targetString.length; i ++){
-            if(i == targetString.length -1){
-                resultString += targetString[i];
+        for(int i = 0;i < targetString.size(); i ++){
+            if(i == targetString.size() -1){
+                resultString += targetString.get(i);
                 break;
             }
-            resultString += targetString[i] + rule;
+            resultString += targetString.get(i) + rule;
         }
         return resultString;
     }
