@@ -18,13 +18,13 @@
                 <span style="width: 30px;height: 8px">用户状态</span>
             </div>
             <div class="layui-inline">
-                <select name="category" lay-filter="userStatus">
-                    <option value="0" selected="selected">通过审核</option>
-                    <option value="010">通过审核已冻结</option>
-                    <option value="021">通过审核未冻结</option>
+                <select name="category" lay-filter="userStatus" lay-verify="required" @change="find()" id="selectId" v-model="selectFind">
+                    <option v-for="option in options" :value="option.value">
+                        {{ option.text }}
+                    </option>
                 </select>
             </div>
-            <button class="layui-btn layui-btn-normal">查询</button>
+            <!--<button class="layui-btn layui-btn-normal">查询</button>-->
         </div>
     <div class="layui-form" id="table-list">
         <table class="layui-table" lay-even lay-skin="nob">
@@ -49,6 +49,18 @@
             </tr>
             </thead>
             <tbody>
+                <tr v-for>
+
+                </tr>
+            </tbody>
+
+
+
+
+
+
+            <!--
+            <tbody>
             <tr>
 
                 <td class="hidden-xs">1</td>
@@ -66,77 +78,8 @@
                     </div>
                 </td>
             </tr>
-            <tr>
-
-                <td class="hidden-xs">1</td>
-                <td class="hidden-xs">王二狗GC</td>
-                <td class="hidden-xs">马冬梅</td>
-                <td>女</td>
-                <td class="hidden-xs">一组跨国贩卖茶叶蛋集团</td>
-                <td class="hidden-xs">未冻结</td>
-                <td>
-                    <div class="layui-inline">
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="01" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="02" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>修改</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="03" data-url="menu-add2.html"><i class="layui-icon">&#xe642;</i>解除冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-danger" data-id="04" data-url="del.html"><i class="layui-icon">&#xe640;</i>查看详情</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-
-                <td class="hidden-xs">1</td>
-                <td class="hidden-xs">王二狗GC</td>
-                <td class="hidden-xs">马冬梅</td>
-                <td>女</td>
-                <td class="hidden-xs">一组跨国贩卖茶叶蛋集团</td>
-                <td class="hidden-xs">未冻结</td>
-                <td>
-                    <div class="layui-inline">
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="01" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="02" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>修改</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="03" data-url="menu-add2.html"><i class="layui-icon">&#xe642;</i>解除冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-danger" data-id="04" data-url="del.html"><i class="layui-icon">&#xe640;</i>查看详情</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-
-                <td class="hidden-xs">1</td>
-                <td class="hidden-xs">王二狗GC</td>
-                <td class="hidden-xs">马冬梅</td>
-                <td>女</td>
-                <td class="hidden-xs">一组跨国贩卖茶叶蛋集团</td>
-                <td class="hidden-xs">未冻结</td>
-                <td>
-                    <div class="layui-inline">
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="01" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="02" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>修改</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="03" data-url="menu-add2.html"><i class="layui-icon">&#xe642;</i>解除冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-danger" data-id="04" data-url="del.html"><i class="layui-icon">&#xe640;</i>查看详情</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-
-                <td class="hidden-xs">1</td>
-                <td class="hidden-xs">王二狗GC</td>
-                <td class="hidden-xs">马冬梅</td>
-                <td>女</td>
-                <td class="hidden-xs">一组跨国贩卖茶叶蛋集团</td>
-                <td class="hidden-xs">未冻结</td>
-                <td>
-                    <div class="layui-inline">
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="01" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="02" data-url="menu-add2.html"><i class="layui-icon">&#xe654;</i>修改</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="03" data-url="menu-add2.html"><i class="layui-icon">&#xe642;</i>解除冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-danger" data-id="04" data-url="del.html"><i class="layui-icon">&#xe640;</i>查看详情</button>
-                    </div>
-                </td>
-            </tr>
-
             </tbody>
-        </table>
+        --></table>
         <div id="operateUser-page" style="text-align: center;"></div>
     </div>
 </div>
@@ -152,6 +95,30 @@
 
 <script>
 
+    new Vue({
+        el:"#selectId",
+        data:{
+            selectFind:"0",
+            options: [ { text: '通过审核', value: '0' },
+                        { text: '通过审核已冻结', value: '1' },
+                        { text: '通过审核未冻结', value: '2' }]
+        },
+        methods:{
+            find:function(){
+                alert(this.selectFind)
+
+                axios
+                    .get('/findAllUser')
+                    .then(response => (this.data=response.data.list))
+            .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+            }
+        }
+
+    });
+
+    
     layui.use(['form', 'jquery', 'layer', 'dialog','laypage'], function() {
         var $ = layui.jquery;
         var laypage = layui.laypage,
