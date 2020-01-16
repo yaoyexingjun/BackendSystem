@@ -1,7 +1,7 @@
 layui.config({
-	base: '../static/js/module/'
+    base: '/static/js/module/'
 }).extend({
-	dialog: 'dialog',
+    dialog: 'dialog',
 });
 
 layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element'], function() {
@@ -75,7 +75,7 @@ layui.use(['form', 'jquery', 'laydate', 'layer', 'laypage', 'dialog',   'element
 	$('#table-list').on('click', '.add-btn', function() {
 		var url=$(this).attr('data-url');
 		//将iframeObj传递给父级窗口
-		parent.page("菜单添加", url, iframeObj, w = "700px", h = "620px");
+		parent.page("菜单添加", url, iframeObj, w = "600px", h = "320px");
 		return false;
 	})
 	//列表删除
