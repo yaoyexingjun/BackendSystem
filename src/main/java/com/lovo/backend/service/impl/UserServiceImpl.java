@@ -4,6 +4,7 @@ import com.lovo.backend.dao.IUserDao;
 import com.lovo.backend.entity.UserEntity;
 import com.lovo.backend.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +25,8 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-    public void updateUserState(String userId, int userState) {
-        userDao.updateUserState(userId,userState);
+    public void updateUserState(String userId, int userState,String causerFreeze,String thawReason) {
+        userDao.updateUserState(userId,userState,causerFreeze,thawReason);
     }
 
 
@@ -34,9 +35,9 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-    public List<UserEntity> findAllUser() {
+    public List<UserEntity> findAllUser(Pageable pageable) {
 
-        return  userDao.findAllUser();
+        return  userDao.findAllUser(pageable);
     }
 
 
@@ -44,4 +45,19 @@ public class UserServiceImpl implements IUserService {
         return  userDao.findById(userId).get();
     }
 
+
+    public List<UserEntity> findByUserState(int userState, Pageable pageable) {
+        return userDao.findByUserState(userState,pageable);
+    }
+
+
+    public int getTotalPage(int pageSize) {
+        //return (userDao.getTotalNumber()+pageSize-1)/pageSize;
+        return ((int)userDao.count()+pageSize-1)/pageSize;
+    }
+
+
+    public int getTotalNumberByUserState(int userState, int pageSize) {
+        return (userDao.getTotalNumberByUserState(userState)+pageSize-1)/pageSize;
+    }
 }

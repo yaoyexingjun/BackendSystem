@@ -1,6 +1,7 @@
 package com.lovo.backend.service;
 
 import com.lovo.backend.entity.UserEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface IUserService {
      * @param userState 用户状态
      */
 
-    public void updateUserState(String userId,int userState);
+    public void updateUserState(String userId,int userState,String causerFreeze,String thawReason);
 
     /**
      * 根据用户名和用户密码查询用户对象
@@ -42,7 +43,7 @@ public interface IUserService {
      * 查询所有用户
      * @return 用户对象集合
      */
-    public List<UserEntity> findAllUser();
+    public List<UserEntity> findAllUser(Pageable pageable);
 
     /**
      * 根据id查询用户对象
@@ -50,4 +51,25 @@ public interface IUserService {
      * @return 用户对象
      */
     public UserEntity findById(String userId);
+    /**
+     * 根据状态查询用户对象集合
+     * @param userState 用户状态
+     * @param pageable 分页插件
+     * @return 用户对象集合
+     */
+    public List<UserEntity> findByUserState(int userState,Pageable pageable);
+
+    /**
+     * 得到总页数
+     * @return 总页数
+     */
+    public int getTotalPage(int pageSize);
+
+    /**
+     * 根据用户状态及每页记录数得到总页数
+     * @param userState 用户状态
+     * @param pageSize 每页记录数
+     * @return 相应用户状态下的总页数
+     */
+    public int getTotalNumberByUserState(int userState,int pageSize);
 }
