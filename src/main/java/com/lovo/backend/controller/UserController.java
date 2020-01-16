@@ -16,7 +16,9 @@ public class UserController {
     private IUserService userService;
     @RequestMapping("addUser")
     public void addUser( UserEntity userEntity){
-        userService.registerUser(userEntity);
+        System.out.println(userEntity.getUserBusinessLicenseImg());
+        System.out.println(userEntity.getUserName());
+       // userService.registerUser(userEntity);
     }
     @RequestMapping("updateUserPwdAndUserPhone")
     public void updateUserPwdAndUserPhone(String userId,String userPwd,String userPhone){
