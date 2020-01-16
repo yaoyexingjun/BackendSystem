@@ -16,7 +16,7 @@ public class UserController {
     private IUserService userService;
     @RequestMapping("addUser")
     public void addUser( UserEntity userEntity){
-        userService.registerUser(userEntity);
+       userService.registerUser(userEntity);
     }
     @RequestMapping("updateUserPwdAndUserPhone")
     public void updateUserPwdAndUserPhone(String userId,String userPwd,String userPhone){
@@ -30,9 +30,10 @@ public class UserController {
     public UserEntity findByUserNameAndUserPwd(String userName, String userPwd){
        return userService.findByUserNameAndUserPwd(userName,userPwd);
     }
-    @RequestMapping("findAll")
+    @RequestMapping("findAllUser")
     public List<UserEntity> findAllUserByState(int userState, Pageable pageable){
-       // return userService.findAllUser();
+
+       //return userService.findAllUser(userState,pageable);
         return null;
     }
     @RequestMapping("findById")

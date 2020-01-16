@@ -64,39 +64,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr v-for="s in info">
+                    <td>{{s.productId}}</td>
+                    <td>{{s.productCode}}</td>
+                    <td>{{s.productName}}</td>
+                    <td>{{s.productType}}</td>
+                    <td>{{s.price}}</td>
+                    <td v-if="s.presellStatus==0">非预售状态</td>
+                    <td v-else>预售状态</td>
+                    <td v-if="s.promotionStatus==0">非促销状态</td>
+                    <td v-else>促销状态</td>
+                    <td v-if="s.onStatus==1">未上架</td>
+                    <td v-else-if="s.onStatus==2">已上架</td>
+                    <td v-else>已下架</td>
+                    <td v-if="s.onStatus==1"><button  class="layui-btn layui-btn-small layui-btn-normal " data-id="1" data-url="article-detail.html" @click="delData(s.productCode,s.onStatus)">上架</button></td>
+                    <td v-else-if="s.onStatus==2" ><button class="layui-btn layui-btn-small layui-btn-normal " data-id="1" data-url="article-detail.html" @click="delData(s.productCode,s.onStatus)">下架</button></td>
+                    <td v-else="s.onStatus==3" ><button class="layui-btn layui-btn-small layui-btn-normal " data-id="1" data-url="article-detail.html" @click="delData(s.productCode,s.onStatus)">上架</button></td>
 
-                    <td class="hidden-xs">1</td>
-                    <td>123asd</td>
-                    <!--<td class="hidden-xs">1989-10-14</td>-->
-                    <td>机械键盘</td>
-                    <td>电子产品</td>
-                    <td>115.0</td>
-                    <td>非预售状态</td>
-                    <td>促销状态</td>
-                    <td>未上架</td>
-                    <td>
-                        <div class="layui-inline">
-                            <button class="layui-btn layui-btn-small layui-btn-normal go-btn" data-id="1" data-url="article-detail.html"><i class="layui-icon">&#xe642;</i>上架</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-
-                    <td class="hidden-xs">2</td>
-                    <td>123</td>
-                    <!--<td class="hidden-xs">1989-10-14</td>-->
-                    <td>小熊饼干</td>
-                    <td>食品</td>
-                    <td>21.0</td>
-                    <td>预售状态</td>
-                    <td>非促销状态</td>
-                    <td>未上架</td>
-                    <td>
-                        <div class="layui-inline">
-                            <button class="layui-btn layui-btn-small layui-btn-normal go-btn" data-id="1" data-url="article-detail.html"><i class="layui-icon">&#xe642;</i>上架</button>
-                        </div>
-                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -110,14 +94,15 @@
 
 
 <script type="text/javascript">
+    var a=6;
     layui.use(['laypage','layer'],function () {
         var laypage =layui.laypage,
             layer = layui.layer;
         //分页
         laypage({
             cont: 'putaway-page'
-            ,pages: 10
-            ,groups:4
+            ,pages: a
+            ,groups:5
             ,skip:true
             ,skin: '#1E9FFF',
             jump:function (obj,first) {
@@ -132,17 +117,52 @@
         data:{
             select2:"",
             soushou:"",
-            optionList: [ { text: '未上架', name: '0' }, { text: '上架', name: '1' }, { text: '下架', name: '2' }]
+            optionList: [ { text: '未上架', name: '1' }, { text: '已上架', name: '2' }, { text: '已下架', name: '3' }],
+            info:"",
+        },
+        mounted(){
+            axios
+                .get('/findAll')
+                .then(response => (
+                this.info=response.data))
+        .catch(function (error) { // 请求失败处理
+                console.log(error);
+            });
         },
         methods:{
-            getValue:function(){
-                alert(this.select2)
+            delData:function(a,b){
+                var params = new URLSearchParams();
+                params.append("a",a);
+                params.append("b",b);
+                params.append("soushou",this.soushou);
+                params.append("select2",this.select2);
+                axios({
+                    method: 'post',
+                    url:'/update',
+                    data: params
+                }).then(response => (this.info=response.data))
+            .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
             },
             sou:function () {
-                alert(this.soushou)
-                alert(this.select2)
-            }
+                var params = new URLSearchParams();
+                params.append("soushou",this.soushou);
+                params.append("select2",this.select2);
+                axios({
+                    method: 'post',
+                    url:'/souState',
+                    data: params
+                }).then(response => (this.info=response.data))
+            .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+            },
+            getValue:function(){
+              /*  alert(this.select2)*/
+            },
         }
+
     });
 
 </script>

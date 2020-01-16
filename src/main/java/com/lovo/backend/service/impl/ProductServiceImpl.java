@@ -40,13 +40,17 @@ public class ProductServiceImpl implements IProductService {
      */
     @Override
     public List<ProductEntity> findState(int state, String producttpye, int page) {
-        if (producttpye == null || producttpye == "") {
+        if (producttpye == null || producttpye == "" && state != 0) {
             Pageable page2 = PageRequest.of(page - 1, 5);
             return productDao.findStateAndPage(state, page2);
+        } else if (producttpye == null || producttpye == "" && state == 0) {
+            Pageable page2 = PageRequest.of(page - 1, 5);
+            return productDao.findAll(page2);
+        } else {
+            Pageable page2 = PageRequest.of(page - 1, 5);
+            return productDao.findByState(state, producttpye, page2);
         }
-        Pageable page2 = PageRequest.of(page - 1, 5);
 
-        return productDao.findByState(state, producttpye, page2);
     }
 
     /**
@@ -64,19 +68,19 @@ public class ProductServiceImpl implements IProductService {
     /**
      * 动态查询,根据类型和上下架状态查询页数
      *
-     * @param state  上下架状态
+     * @param state       上下架状态
      * @param producttpye 商品类型
      * @return
      */
     @Override
     public int findStatePage(int state, String producttpye) {
         if (producttpye == null || producttpye == "") {
-            int count =  productDao.findState(state);
+            int count = productDao.findState(state);
             int totalPage = (count + 5 - 1) / 5;
-                return totalPage;
+            return totalPage;
 
         }
-        int count =  productDao.findByStateCount(state,producttpye);
+        int count = productDao.findByStateCount(state, producttpye);
         int totalPage = (count + 5 - 1) / 5;
         return totalPage;
     }
