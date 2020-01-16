@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>后端申请退货</title>
+    <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
+    <style>
+        #span01{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #input01{
+            width: 200px;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="page-content-wrap">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <span style="width: 30px;height: 8px" id="span01">后端申请退货</span>
+        </div>
+    </div>
+    <div class="layui-form" id="table-list">
+        <table class="layui-table" lay-even lay-skin="nob">
+            <colgroup>
+                <col class="hidden-xs" width="150">
+                <col class="hidden-xs" width="250">
+                <col class="hidden-xs" width="200">
+                <col class="hidden-xs" width="150">
+                <col class="hidden-xs" width="250">
+                <col class="hidden-xs" width="150">
+                <col class="hidden-xs" width="250">
+                <col class="hidden-xs" width="250">
+                <col width="200">
+            </colgroup>
+            <thead>
+            <tr>
+                <th class="hidden-xs">批次ID</th>
+                <th class="hidden-xs">商品编号</th>
+                <th class="hidden-xs">供货批次</th>
+                <th class="hidden-xs">采购数量/件</th>
+                <th class="hidden-xs">供货商名字</th>
+                <th class="hidden-xs">单价/元</th>
+                <th class="hidden-xs">总金额/元</th>
+                <th class="hidden-xs">退货数量</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="hidden-xs">551</td>
+                <td class="hidden-xs">DZ86926</td>
+                <td class="hidden-xs">20200103第1批</td>
+                <td class="hidden-xs">50</td>
+                <td class="hidden-xs">二狗养猪集团</td>
+                <td class="hidden-xs">20</td>
+                <td class="hidden-xs">1000</td>
+                <td class="hidden-xs">
+                    <div class="layui-inline">
+                        <input type="text" name="returnNumber" id="input01">
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-inline">
+                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="1"><i class="layui-icon">&#xe642;</i>退货</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="hidden-xs">551</td>
+                <td class="hidden-xs">DZ86926</td>
+                <td class="hidden-xs">20200103第1批</td>
+                <td class="hidden-xs">50</td>
+                <td class="hidden-xs">二狗养猪集团</td>
+                <td class="hidden-xs">20</td>
+                <td class="hidden-xs">1000</td>
+                <td class="hidden-xs">
+                    <div class="layui-inline">
+                        <input type="text" name="returnNumber" id="input01">
+                    </div>
+                </td>
+                <td>
+                    <div class="layui-inline">
+                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="1"><i class="layui-icon">&#xe642;</i>退货</button>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div id="returnApply-page" style="text-align: center;"></div>
+
+    </div>
+</div>
+
+<script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+<!--vue-->
+<script src="../../vue/Vue.js"></script>
+<!--使用ajax 需要导入-->
+<script  src="../../vue/vue-resource.js"></script>
+<!--获取URL的参数-->
+<script  src="../../vue/paragram.js"></script>
+
+<script>
+
+    layui.use(['form', 'jquery', 'layer', 'dialog','laypage'], function() {
+        var $ = layui.jquery;
+        var laypage = layui.laypage,
+            layer = layui.layer;
+
+        //分页
+        laypage({
+            cont: 'returnApply-page'
+            ,pages: 10
+            ,groups:4
+            ,skip:true
+            ,skin: '#1E9FFF',
+            jump:function (obj,first) {
+                var currPage = obj.curr;
+            }
+        });
+    });
+
+</script>
+</body>
+
+</html>

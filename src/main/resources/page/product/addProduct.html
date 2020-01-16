@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商城后端系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
+
+    <script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <!--vue-->
+    <script src="../../vue/Vue.js"></script>
+    <!--使用ajax 需要导入-->
+    <script  src="../../vue/vue-resource.js"></script>
+    <!--获取URL的参数-->
+    <script  src="../../vue/paragram.js"></script>
+</head>
+<body>
+    <div class="wrap-container clearfix" id="allId">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品编号：</label>
+            <div class="layui-input-block">
+                <input type="text" id="productCode" v-model="productCode" required lay-verify="required" placeholder="请输入商品编号" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品名：</label>
+            <div class="layui-input-block">
+                <input type="text" id="productName" v-model="productName" required lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品规格：</label>
+            <div class="layui-input-block">
+                <input type="text" id="productSpecification" v-model="productSpecification" required lay-verify="required" placeholder="请输入商品编号" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品类型：</label>
+            <div class="layui-input-block">
+                <input type="text" id="productType" v-model="productType" required lay-verify="required" placeholder="请输入商品类型" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">预售状态：</label>
+            <div class="layui-inline">
+                <select name="presellStatus" v-model="presellStatus" lay-verify="required" class="layui-input" style="margin-top: 16px">
+                    <option  value="非预售商品" selected="selected">非预售商品</option>
+                    <option  value="预售商品">预售商品</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" @click="saveUser">添加</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ajax代码 -->
+    <script>
+        new Vue({
+            el:"#allId",
+            data:{
+                productCode:"",
+                productName:"",
+                productSpecification:"",
+                productType:"",
+                presellStatus:""
+            },
+            methods: {
+                saveUser: function () {
+                    alert(this.productCode+this.presellStatus);
+                    var bl=false;
+                    //发送ajax
+                    //发送 post 请求
+                    this.$http.post('/updateUser',
+                        {
+
+                            userName:this.userName,
+                            userAge:this.userAge,
+                            dateTime:this.dateTime
+                        },
+                        {emulateJSON:true}).then(function(res){
+                        var r=confirm("添加成功，是否继续添加?");
+                        if(r){
+                            this.userName="";
+                            this.dateTime="";
+                            this.userAge=30;
+
+                        }else {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                            window.parent.location.reload();
+                        }
+                    },function(res){
+                        console.log(res.status);
+                    });
+
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
