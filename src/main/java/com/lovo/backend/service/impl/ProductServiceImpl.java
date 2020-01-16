@@ -25,7 +25,7 @@ public class ProductServiceImpl implements IProductService {
      */
     @Override
     public List<ProductEntity> findAll(int page) {
-        Pageable page2 = PageRequest.of(page - 1, 15);
+        Pageable page2 = PageRequest.of(page - 1, 5);
         List<ProductEntity> list = productDao.findAll(page2);
         return list;
     }
