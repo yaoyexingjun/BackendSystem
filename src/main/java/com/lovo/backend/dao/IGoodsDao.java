@@ -1,6 +1,7 @@
 package com.lovo.backend.dao;
 
 import com.lovo.backend.entity.ProductEntity;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +26,13 @@ public interface IGoodsDao extends CrudRepository<ProductEntity,Long> {
      */
     @Query("from ProductEntity pe where pe.productCode = :productCode")
     public ProductEntity findProductByProductCode(@Param("productCode")String productCode);
+
+    /**
+     * 修改指定商品编号的商品的促销状态
+     * @param productCode  商品编号
+     * @param promotionStatus 促销状态
+     */
+    @Query("update ProductEntity pe set pe.promotionStatus = ?2 where pe.productCode = ?1")
+    @Modifying
+    public void updatePromotionStatus(String productCode,String promotionStatus);
 }

@@ -26,4 +26,12 @@ public interface IStockDao extends CrudRepository<StockEntity,Long> {
     @Query("update StockEntity se set se.stockNum = se.stockNum + :stockNum where se.productCode = :productCode")
     @Modifying
     public void updateStockNumByProductCode(@Param("stockNum")int stockNum,@Param("productCode")String productCode);
+
+    /**
+     * 根据商品编号修改库存表里的阈值
+     * @param productCode 商品编号
+     * @param threshold 阈值
+     */
+    @Query("update StockEntity se set se.threshold = ?2 where se.productCode = ?1")
+    public void updateThresholdByProductCode(String productCode,int threshold);
 }
