@@ -10,8 +10,9 @@ import java.io.Serializable;
 @Table(name = "sys_user")
 public class UserEntity implements Serializable {
     /**用户id*/
-    @Id
-
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column(name = "user_id" ,length = 32)
     private String userId;
     /**用户名*/
