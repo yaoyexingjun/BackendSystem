@@ -7,9 +7,11 @@ import com.lovo.backend.service.ISupplyBatchService;
 import com.lovo.backend.service.ISupplyRecordService;
 import com.lovo.backend.util.FormatDateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +40,8 @@ public class SupplyBatchServiceImpl implements ISupplyBatchService {
         supplyRecordService.addSupplyRecord(supplyRecordEntity);
     }
 
-    public List<SupplyBatchEntity> findAllSupplyBatch() {
-        return supplyBatchDao.findAllSupplyBatch();
+    public List<SupplyBatchEntity> findAllSupplyBatch(Pageable pageable) {
+        return supplyBatchDao.findAllSupplyBatch(pageable);
     }
 
     public SupplyBatchEntity findSupplyBatchById(long supplyBatchId) {
@@ -63,6 +65,10 @@ public class SupplyBatchServiceImpl implements ISupplyBatchService {
 
         //保存供货批次记录
         supplyRecordService.addSupplyRecord(supplyRecordEntity);
+    }
+
+    public int getTotalCount() {
+        return (int) supplyBatchDao.count();
     }
 
 }

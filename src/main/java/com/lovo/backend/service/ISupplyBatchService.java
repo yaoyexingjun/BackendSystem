@@ -1,6 +1,7 @@
 package com.lovo.backend.service;
 
 import com.lovo.backend.entity.SupplyBatchEntity;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ISupplyBatchService {
      * 查询全部供货批次
      * @return 供货批次集合
      */
-    public List<SupplyBatchEntity> findAllSupplyBatch();
+    public List<SupplyBatchEntity> findAllSupplyBatch(Pageable pageable);
 
     /**
      * 根据供货批次id查询单个供货批次
@@ -33,4 +34,11 @@ public interface ISupplyBatchService {
      * @param supplyRecord 供货批次状态
      */
     public void updateSupplyRecord(long supplyBatchId,int supplyRecord);
+
+    /**
+     * 获取总记录条数
+     * @return 总记录条数
+     */
+    public int getTotalCount();
+
 }

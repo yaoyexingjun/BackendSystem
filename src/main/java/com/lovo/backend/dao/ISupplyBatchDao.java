@@ -1,6 +1,7 @@
 package com.lovo.backend.dao;
 
 import com.lovo.backend.entity.SupplyBatchEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,7 +18,7 @@ public interface ISupplyBatchDao extends CrudRepository<SupplyBatchEntity,Long> 
      * @return 供货批次集合
      */
     @Query("from SupplyBatchEntity sbe order by sbe.supplyRecord asc")
-    public List<SupplyBatchEntity> findAllSupplyBatch();
+    public List<SupplyBatchEntity> findAllSupplyBatch(Pageable pageable);
 
     /**
      * 按供货批次id修改供货批次的进度
