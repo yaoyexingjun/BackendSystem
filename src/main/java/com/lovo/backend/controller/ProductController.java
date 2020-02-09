@@ -14,6 +14,12 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
+    @RequestMapping("findAllPage")
+    public int findAllPage(){
+        int a=productService.findPage();
+        return a;
+    }
+
     @RequestMapping("findAll")
     public List<ProductEntity> findAll(){
         List<ProductEntity>list=productService.findAll(1);
@@ -22,13 +28,24 @@ public class ProductController {
     }
     @RequestMapping("souState")
     public List<ProductEntity>findState(String soushou,String select2){
-        System.out.println(soushou+"---"+select2);
+        System.out.println(soushou+"@@"+select2);
         int state=0;
         if (select2!=""){
             state  =Integer.parseInt(select2);
         }
 
         List<ProductEntity>list=productService.findState(state,soushou,1);
+        return list;
+    }
+
+    @RequestMapping("productFenYe")
+    public List<ProductEntity>findPage(String soushou,String select2,String currPage){
+        int page=Integer.parseInt(currPage);
+        int state=0;
+        if (select2!=""&&select2!=null){
+            state  =Integer.parseInt(select2);
+        }
+        List<ProductEntity>list=productService.findState(state,soushou,page);
         return list;
     }
 
