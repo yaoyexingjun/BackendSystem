@@ -45,6 +45,14 @@ public interface IProductDao extends CrudRepository<ProductEntity,Long>,JpaSpeci
      */
     @Query("select count(productId) from ProductEntity where price >0 and onStatus=?1")
     public int findState(int state);
+
+    /**
+     * 根据物品类型查询出该物品的总条数
+     * @param productType 物品类型
+     * @return
+     */
+    @Query("select count(productId) from ProductEntity where price >0 and productType like %?1%")
+    public int findProductTpyeCount(String productType);
     /**
      * 查询前端商品,按上下架和商品类型条件查询
      * @param onStatus 上下架状态
@@ -55,7 +63,14 @@ public interface IProductDao extends CrudRepository<ProductEntity,Long>,JpaSpeci
     @Query("from ProductEntity where price >0 and onStatus=?1 and productType like %?2% ")
     public List<ProductEntity> findByState(int onStatus ,String type,Pageable page);
 
-
+    /**
+     * 查询前端商品,按商品类型条件查询
+     * @param type 商品类型
+     * @param page 分页查询
+     * @return
+     */
+    @Query("from ProductEntity where price >0 and productType like %?1% ")
+    public List<ProductEntity> findByProductType(String type,Pageable page);
     /**
      * 根据上下架状态和产品类型查询总条数
      * @param onStatus

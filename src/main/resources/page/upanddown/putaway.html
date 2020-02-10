@@ -48,7 +48,7 @@
                     <option v-for='item in optionList' :value="item.name">{{ item.text }}</option>
                 </select>
             </div>
-            <button class="layui-btn layui-btn-normal" lay-submit="search" @click="sou()">搜索</button>
+            <button class="layui-btn layui-btn-normal" lay-submit="search" @click="sou()" id="sou">搜索</button>
         </div>
 
         <div class="layui-form" id="table-list">
@@ -106,7 +106,6 @@
     </div>
 </div>
 <script type="text/javascript">
-
     var vue=   new Vue({
         el:"#shangjia",
         data:{
@@ -117,7 +116,6 @@
             info:"",
         },
         mounted(){
-
             axios
                 .get('/findAll')
                 .then(response => (
@@ -162,8 +160,6 @@
                 alert(this.zong)
             }
         },
-
-
     });
     /*进入页面后自动获取总页数*/
     var a=0;
@@ -174,48 +170,71 @@
         async: false,
         success: function (data) {
             a=data;
+            page(a)
         }
     });
-
-    /*翻页代码*/
-    var b=11;
-    var totalCount = 0;
-    layui.use(['laypage','layer'],function () {
-        var laypage =layui.laypage,
-            layer = layui.layer;
-        //分页
-        laypage({
-            cont: 'putaway-page'
-            ,pages: a
-            ,last: a
-            ,groups:5
-            ,skip:true
-            ,skin: '#1E9FFF',
-            /*下面是翻页面的时候就执行的/*/
-            jump:function (obj,first) {
-                var param = {
-                    soushou: vue.soushou,
-                    select2:vue.select2,
-                    currPage: obj.curr,
-                    //其它查询条件可在下面添加
-                };
-                /*判断不是进入页面,而且是手动翻页的时候执行*/
-                if (!first){
-                    $.ajax({
-                        url:"/productFenYe",
-                        data: param,
-                        type: "post",
-                        dataType: 'text json',
-                        async: false,
-                        success: function (data){
-                            /*翻页后的内容赋值给vue,然后刷新在页面上*/
-                            vue.info = data;
-                        }
-                    })
-                }
+    /*条件分页代码*/
+    $("#sou").click(function () {
+        var param = {
+            soushou: vue.soushou,
+            select2:vue.select2,
+            //其它查询条件可在下面添加
+        };
+        $.ajax({
+            url: "/stateFindPage",
+            type: "post",
+            data: param,
+            dataType: 'text json',
+            async: false,
+            success: function (data) {
+                /*赋值页数给a*/
+                a=data;
+                /*用a重新赋值页面页数*/
+               page(a)
             }
         });
     });
+
+    /*进入页面先默认翻页代码*/
+    function page(a){
+        layui.use(['laypage','layer'],function () {
+            var laypage =layui.laypage,
+                layer = layui.layer;
+            //分页
+            laypage({
+                cont: 'putaway-page'
+                ,pages: a
+                ,last: a
+                ,groups:5
+                ,skip:true
+                ,skin: '#1E9FFF',
+                /*下面是翻页面的时候就执行的/*/
+                jump:function (obj,first) {
+                    var param = {
+                        soushou: vue.soushou,
+                        select2:vue.select2,
+                        currPage: obj.curr,
+                        //其它查询条件可在下面添加
+                    };
+                    /*判断不是进入页面,而且是手动翻页的时候执行*/
+                    if (!first){
+                        $.ajax({
+                            url:"/productFenYe",
+                            data: param,
+                            type: "post",
+                            dataType: 'text json',
+                            async: false,
+                            success: function (data){
+                                /*翻页后的内容赋值给vue,然后刷新在页面上*/
+                                vue.info = data;
+                            }
+                        })
+                    }
+                }
+            });
+        });
+
+    }
 
 </script>
 </body>

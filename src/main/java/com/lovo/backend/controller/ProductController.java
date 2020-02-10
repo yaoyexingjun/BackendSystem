@@ -51,6 +51,7 @@ public class ProductController {
 
     @RequestMapping("update")
     public List<ProductEntity> updateAndFindAll(String a,String b,String soushou,String select2){
+      //a是物品编号 b是修改成的状态 soushou是产品类型 select2是当前状态
        int state= Integer.parseInt(b);
         System.out.println(a+"_"+b+"_"+soushou+"_"+select2);
       if (state==1){
@@ -68,5 +69,18 @@ public class ProductController {
         List<ProductEntity>list=productService.findState(state2,soushou,1);
         return list;
 
+    }
+
+    @RequestMapping("stateFindPage")
+    public int stateFindPage(String select2,String soushou){
+        int state=0;
+        if (select2==""||select2==null){
+            state=0;
+        }else {
+            state=Integer.parseInt(select2);
+        }
+        System.out.println(state);
+       int page= productService.findStatePage(state,soushou);
+        return  page;
     }
 }

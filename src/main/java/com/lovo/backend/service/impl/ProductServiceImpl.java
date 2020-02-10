@@ -46,7 +46,12 @@ public class ProductServiceImpl implements IProductService {
         } else if (producttpye == null || producttpye == "" && state == 0) {
             Pageable page2 = PageRequest.of(page - 1, 5);
             return productDao.findAll(page2);
-        } else {
+        } else if(producttpye != null || producttpye != "" && state != 0){
+            Pageable page2 = PageRequest.of(page - 1, 5);
+            return productDao.findByProductType(producttpye,page2);
+        }
+
+        else {
             Pageable page2 = PageRequest.of(page - 1, 5);
             return productDao.findByState(state, producttpye, page2);
         }
@@ -74,15 +79,26 @@ public class ProductServiceImpl implements IProductService {
      */
     @Override
     public int findStatePage(int state, String producttpye) {
-        if (producttpye == null || producttpye == "") {
+        if(producttpye == null || producttpye == ""&&state==0) {
+            int count = productDao.findAllCount();
+            int totalPage = (count + 5 - 1) / 5;
+            return totalPage;
+        }
+        else  if(producttpye == null || producttpye == "") {
             int count = productDao.findState(state);
             int totalPage = (count + 5 - 1) / 5;
             return totalPage;
-
+        }else if(producttpye != null || producttpye != ""&&state==0){
+            int count = productDao.findProductTpyeCount(producttpye);
+            int totalPage = (count + 5 - 1) / 5;
+            return totalPage;
         }
-        int count = productDao.findByStateCount(state, producttpye);
-        int totalPage = (count + 5 - 1) / 5;
-        return totalPage;
+        else {
+            int count = productDao.findByStateCount(state, producttpye);
+            int totalPage = (count + 5 - 1) / 5;
+            return totalPage;
+        }
+
     }
 
     /**
