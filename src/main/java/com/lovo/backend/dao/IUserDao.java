@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface IUserDao extends CrudRepository<UserEntity,String> {
+public interface IUserDao extends CrudRepository<UserEntity,Long> {
     /**
      * 根据用户id修改用户的密码和电话
      * @param userId 用户id
@@ -67,4 +67,12 @@ public interface IUserDao extends CrudRepository<UserEntity,String> {
      */
     @Query("select count (userId) from UserEntity where userState=?1")
     public int getTotalNumberByUserState(int userState);
+
+    /**
+     * 根据userId查询用户对象
+     * @param userId 用户的userId
+     * @return 用户对象
+     */
+    @Query("from UserEntity  where userId=?1")
+    public UserEntity findByUserId(String userId);
 }

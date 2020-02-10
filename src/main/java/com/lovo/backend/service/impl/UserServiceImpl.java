@@ -12,8 +12,21 @@ import java.util.List;
 @Service(value = "userService")
 @Transactional
 public class UserServiceImpl implements IUserService {
+
+
+
     @Autowired
     private IUserDao userDao;
+
+
+
+    public int getTotalNumber() {
+        return userDao.getTotalNumber();
+    }
+
+    public int getTotalNumberByUserState(int userState) {
+        return userDao.getTotalNumberByUserState(userState);
+    }
 
     public void registerUser(UserEntity userEntity) {
 
@@ -40,8 +53,11 @@ public class UserServiceImpl implements IUserService {
         return  userDao.findAllUser(pageable);
     }
 
+    public UserEntity findByUserId(String userId) {
+        return userDao.findByUserId(userId);
+    }
 
-    public UserEntity findById(String userId) {
+    public UserEntity findById(Long userId) {
         return  userDao.findById(userId).get();
     }
 
