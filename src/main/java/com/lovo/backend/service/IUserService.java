@@ -50,7 +50,14 @@ public interface IUserService {
      * @param userId 用户id
      * @return 用户对象
      */
-    public UserEntity findById(String userId);
+    public UserEntity findById(Long userId);
+
+    /**
+     * 根据userId查询用户对象
+     * @param userId 用户的userId
+     * @return 用户对象
+     */
+    public UserEntity findByUserId(String userId);
     /**
      * 根据状态查询用户对象集合
      * @param userState 用户状态
@@ -72,4 +79,17 @@ public interface IUserService {
      * @return 相应用户状态下的总页数
      */
     public int getTotalNumberByUserState(int userState,int pageSize);
+
+    /**
+     * 统计总记录条数
+     * @return 总记录条数
+     */
+    public int getTotalNumber();
+
+    /**
+     * 根据用户状态查询用户的总记录数
+     * @param userState
+     * @return 总记录数
+     */
+    public int getTotalNumberByUserState(int userState);
 }

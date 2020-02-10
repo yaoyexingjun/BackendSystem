@@ -52,6 +52,14 @@ public class UserEntity implements Serializable {
     @Column(name = "user_thaw_reason",length = 80)
     private String thawReason;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getUserId() {
         return userId;
     }
