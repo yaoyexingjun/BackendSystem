@@ -71,4 +71,9 @@ public class SupplyBatchServiceImpl implements ISupplyBatchService {
         return (int) supplyBatchDao.count();
     }
 
+    public int findAllPage() {
+        int count = this.getTotalCount();
+        int totalPage = (count + 5 - 1) / 5;
+        return totalPage;
+    }
 }

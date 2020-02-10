@@ -9,19 +9,11 @@
     <title>入库操作</title>
     <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
-    <link rel="stylesheet" type="text/css" href="../../layuiadmin/layui/css/layui.css"/>
-    <link rel="stylesheet" type="text/css" href="../../layuiadmin/style/admin.css"/>
-    <script src="../../layuiadmin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
-    <!--vue-->
     <script src="../../vue/Vue.js"></script>
-    <!--使用ajax 需要导入-->
-    <script  src="../../vue/vue-resource.js"></script>
-    <!--获取URL的参数-->
-    <script  src="../../vue/paragram.js"></script>
-    <!--axios插件-->
     <script src="../../vue/axios.min.js"></script>
-    <!--JQuery-->
+    <script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/main.js" type="text/javascript" charset="utf-8"></script>
     <script src="../../vue/jQuery-2.2.2-min.js"></script>
     <style>
         #span01{
@@ -109,46 +101,52 @@
         }
     });
 
-    layui.use('laypage', function () {
-        var laypage = layui.laypage;
-        laypage.render({
-            elem: 'warehousing-page'
-            , count: totalCount
-            , limit :5
-            , groups:1
-            , layout: ['count', 'prev', 'page', 'next', 'refresh', 'skip']
-            , jump: function (obj, first) {
-                //点击非第一页页码时的处理逻辑。比如这里调用了ajax方法，异步获取分页数据
-                if (!first) {
-                    pagination(obj.curr, obj.limit);//第二个参数不能用变量pageSize，因为当切换每页大小的时候会出问题
+    var totalPage = 0;//总页数
+    $.ajax({
+        url: "/findAllSupplyBatchPage",
+        type: "post",
+        dataType: 'text json',
+        async: false,
+        success: function (data) {
+            totalPage = data;
+        }
+    });
+
+    /*翻页代码*/
+    layui.use(['laypage','layer'],function () {
+        var laypage =layui.laypage,
+            layer = layui.layer;
+        //分页
+        laypage({
+            cont: 'warehousing-page'
+            ,pages: totalPage
+            ,last: totalPage
+            ,groups:5
+            ,skip:true
+            ,skin: '#1E9FFF',
+            /*下面是翻页面的时候就执行的/*/
+            jump:function (obj,first) {
+                var param = {
+                    currPage: obj.curr
+                    //查询条件可在下面添加
+                };
+                /*判断不是进入页面,而且是手动翻页的时候执行*/
+                if (!first){
+                    $.ajax({
+                        url:"/findAllSupplyBatch",
+                        data: param,
+                        type: "post",
+                        dataType: 'text json',
+                        async: false,
+                        success: function (data){
+                            /*翻页后的内容赋值给vue,然后刷新在页面上*/
+                            vue.info = data;
+                        }
+                    })
                 }
             }
         });
     });
-
-    var pageIndex = 1;
-    var pageSize = 5;
-    var totalCount = 0;
-    pagination(pageIndex, pageSize);
-    function pagination(pageIndex, pageSize) {
-        //查询条件
-        var param = {
-            currPage: pageIndex,
-            pageSize: pageSize,
-            //其它查询条件可在下面添加
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/findAllSupplyBatch',
-            dataType: 'json',
-            data: param,
-            async: false,//这里设置为同步执行，目的是等数据加载完再调用layui分页组件，不然分页组件拿不到totalCount的值
-            success: function (data) {
-                vue.info = data.dataList;
-                totalCount = data.totalCount;
-            }
-        });
-    };
 </script>
 </body>
 </html>
