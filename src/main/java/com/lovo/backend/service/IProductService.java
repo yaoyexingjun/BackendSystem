@@ -28,7 +28,7 @@ public interface IProductService {
      */
     public int findPage();
     /**
-     * 动态查询,根据类型和上下架状态查询页数
+         * 动态查询,根据类型和上下架状态查询页数
      * @param state 上下架状态
      * @param producttpye 商品类型
      * @return
