@@ -41,4 +41,9 @@ public interface ISupplyBatchService {
      */
     public int getTotalCount();
 
+    /**
+     * 查询供货批次总页数
+     * @return 总页数
+     */
+    public int findAllPage();
 }
