@@ -165,6 +165,7 @@
 
 
     });
+    /*进入页面后自动获取总页数*/
     var a=0;
     $.ajax({
         url: "/findAllPage",
@@ -175,6 +176,8 @@
             a=data;
         }
     });
+
+    /*翻页代码*/
     var b=11;
     var totalCount = 0;
     layui.use(['laypage','layer'],function () {
@@ -188,19 +191,15 @@
             ,groups:5
             ,skip:true
             ,skin: '#1E9FFF',
-            /*下面是运行页面的时候就执行的/*/
+            /*下面是翻页面的时候就执行的/*/
             jump:function (obj,first) {
-                /*var currPage = obj.curr;*/
-
                 var param = {
                     soushou: vue.soushou,
                     select2:vue.select2,
                     currPage: obj.curr,
                     //其它查询条件可在下面添加
                 };
-
-                /* vue.zong=document.getElementById("zong").value=currPage;
-                    alert(currPage);*/
+                /*判断不是进入页面,而且是手动翻页的时候执行*/
                 if (!first){
                     $.ajax({
                         url:"/productFenYe",
@@ -209,6 +208,7 @@
                         dataType: 'text json',
                         async: false,
                         success: function (data){
+                            /*翻页后的内容赋值给vue,然后刷新在页面上*/
                             vue.info = data;
                         }
                     })

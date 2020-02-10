@@ -52,7 +52,7 @@ public class ProductController {
     @RequestMapping("update")
     public List<ProductEntity> updateAndFindAll(String a,String b,String soushou,String select2){
        int state= Integer.parseInt(b);
-        System.out.println(state);
+        System.out.println(a+"_"+b+"_"+soushou+"_"+select2);
       if (state==1){
           productService.updateState(2,a);
       }else if(state==2){
