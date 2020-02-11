@@ -67,7 +67,7 @@
                 <td class="hidden-xs" v-if="supplyBatch.supplyRecord==1">已入库</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="1" @click="ruku()"><i class="layui-icon">&#xe642;</i>入库</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="1" @click="ruku(supplyBatch.supplyBatchId)"><i class="layui-icon">&#xe642;</i>入库</button>
                         <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" data-id="2" data-url="batchInfo.html"><i class="layui-icon">&#xe615;</i>查看库存批次</button>
                     </div>
                 </td>
@@ -95,7 +95,8 @@
         el:"#table-list",
         data:{
             info:'',
-            currPage:1
+            currPage:1,
+            information:''
         },
         mounted(){
             var params = new URLSearchParams();
@@ -110,8 +111,18 @@
             });
         },
         methods:{
-            ruku:function () {
-                alert(1)
+            ruku:function (supplyBatchId) {
+                var params = new URLSearchParams();
+                params.append("supplyBatchId",supplyBatchId);
+                axios({
+                    method: 'post',
+                    url:'/updateSupplyBatchRecord',
+                    data: params
+                })
+                    .then(response => (this.information = response.data))
+            .catch(function (error) { // 请求失败处理console.log(error);
+                });
+                window.location.reload();
             }
         }
     });
