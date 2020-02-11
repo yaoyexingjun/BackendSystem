@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>库存批次详情</title>
+    <title>供货批次记录详情</title>
     <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
     <style>
@@ -29,7 +28,7 @@
 <div class="page-content-wrap">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <span style="width: 30px;height: 8px" id="span01">库存批次</span>
+            <span style="width: 30px;height: 8px" id="span01">供货批次记录</span>
         </div>
     </div>
     <div class="layui-form" id="table-list">
@@ -39,44 +38,25 @@
                 <col class="hidden-xs" width="200">
                 <col class="hidden-xs" width="200">
                 <col class="hidden-xs" width="250">
-                <col class="hidden-xs" width="250">
-                <col class="hidden-xs" width="100">
-                <col class="hidden-xs" width="100">
             </colgroup>
             <thead>
             <tr>
                 <th class="hidden-xs">批次ID</th>
-                <th class="hidden-xs">商品编号</th>
-                <th class="hidden-xs">供货批次</th>
-                <th class="hidden-xs">采购数量/件</th>
-                <th class="hidden-xs">供货商名字</th>
-                <th class="hidden-xs">单价/元</th>
-                <th class="hidden-xs">总金额/元</th>
+                <th class="hidden-xs">供货批次号</th>
+                <th class="hidden-xs">供货记录</th>
+                <th class="hidden-xs">供货时间</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="hidden-xs">551</td>
-                <td class="hidden-xs">DZ86926</td>
-                <td class="hidden-xs">20200103第1批</td>
-                <td class="hidden-xs">50</td>
-                <td class="hidden-xs">涛哥</td>
-                <td class="hidden-xs">20</td>
-                <td class="hidden-xs">1000</td>
+            <tr v-for="supplyRecord in info">
+                <td class="hidden-xs">{{supplyRecord.supplyRecordId}}</td>
+                <td class="hidden-xs">{{supplyRecord.supplyBatch}}</td>
+                <td class="hidden-xs">{{supplyRecord.supplyRecord}}</td>
+                <td class="hidden-xs">{{supplyRecord.supplyRecordTime}}</td>
             </tr>
-            <tr>
-                <td class="hidden-xs">551</td>
-                <td class="hidden-xs">DZ86926</td>
-                <td class="hidden-xs">20200103第1批</td>
-                <td class="hidden-xs">50</td>
-                <td class="hidden-xs">涛哥</td>
-                <td class="hidden-xs">20</td>
-                <td class="hidden-xs">1000</td>
-            </tr>
-
             </tbody>
         </table>
-        <div id="batchInfo-page" style="text-align: center;"></div>
+        <!--<div id="batchInfo-page" style="text-align: center;"></div>-->
 
         <div class="layui-form-item" style="text-align: center">
             <div class="layui-input-block">
@@ -94,28 +74,59 @@
 <script  src="../../vue/vue-resource.js"></script>
 <!--获取URL的参数-->
 <script  src="../../vue/paragram.js"></script>
+<!--引入jquery-->
+<script src="../../vue/jQuery-2.2.2-min.js"></script>
+<!--引入ajax-->
+<script src="../../vue/axios.min.js"></script>
 
 <script>
+    // layui.use(['form', 'jquery', 'layer', 'dialog','laypage'], function() {
+    //     var $ = layui.jquery;
+    //     var laypage = layui.laypage,
+    //         layer = layui.layer;
+    //
+    //     //分页
+    //     laypage({
+    //         cont: 'batchInfo-page'
+    //         ,pages: 10
+    //         ,groups:4
+    //         ,skip:true
+    //         ,skin: '#1E9FFF',
+    //         jump:function (obj,first) {
+    //             var currPage = obj.curr;
+    //         }
+    //     });
+    // });
 
-    layui.use(['form', 'jquery', 'layer', 'dialog','laypage'], function() {
-        var $ = layui.jquery;
-        var laypage = layui.laypage,
-            layer = layui.layer;
-
-        //分页
-        laypage({
-            cont: 'batchInfo-page'
-            ,pages: 10
-            ,groups:4
-            ,skip:true
-            ,skin: '#1E9FFF',
-            jump:function (obj,first) {
-                var currPage = obj.curr;
+    var vue = new Vue({
+        el:"#table-list",
+        data:{
+            info:'',
+            supplyBatch:'',
+        },
+        mounted(){
+            var params = new URLSearchParams();
+            this.supplyBatch = GetQueryString("id");
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+                if(r!=null)return  decodeURI(r[2]);return null;
             }
-        });
-    });
+            params.append("supplyBatch",this.supplyBatch);
+            axios({
+                method: 'post',
+                url:'/findTheSupplyRecord',
+                data: params
+            })
+                .then(response => (this.info = response.data))
+        .catch(function (error) { // 请求失败处理console.log(error);
+            });
+        },
+        methods:{
 
+        }
+    });
 </script>
 </body>
-
 </html>

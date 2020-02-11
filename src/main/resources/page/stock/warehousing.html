@@ -68,7 +68,7 @@
                 <td>
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-mini layui-btn-normal" data-id="1" @click="ruku(supplyBatch.supplyBatchId)"><i class="layui-icon">&#xe642;</i>入库</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" data-id="2" data-url="batchInfo.html"><i class="layui-icon">&#xe615;</i>查看库存批次</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" :data-id="supplyBatch.supplyBatch" data-url="batchInfo.html"><i class="layui-icon">&#xe615;</i>查看库存批次</button>
                     </div>
                 </td>
             </tr>

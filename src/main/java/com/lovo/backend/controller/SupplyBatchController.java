@@ -31,4 +31,12 @@ public class SupplyBatchController {
         List<SupplyBatchEntity> list = supplyBatchService.findAllSupplyBatch(pageable);
         return list;
     }
+
+    @RequestMapping("updateSupplyBatchRecord")
+    @ResponseBody
+    public String updateSupplyBatchRecord(String supplyBatchId,String currPage){
+        long sbId = Long.valueOf(supplyBatchId);
+        supplyBatchService.updateSupplyRecord(sbId,1);
+        return "ok";
+    }
 }
