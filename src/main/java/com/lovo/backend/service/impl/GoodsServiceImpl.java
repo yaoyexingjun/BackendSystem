@@ -28,7 +28,7 @@ public class GoodsServiceImpl implements IGoodsService {
         return goodsDao.findAllProduct();
     }
 
-    public ProductEntity findProductByProductId(String productCode) {
+    public ProductEntity findProductByProductCode(String productCode) {
         return goodsDao.findProductByProductCode(productCode);
     }
 }

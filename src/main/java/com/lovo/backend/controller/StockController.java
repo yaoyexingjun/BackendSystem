@@ -35,15 +35,17 @@ public class StockController {
         return stockService.findAllPage();
     }
 
-    @RequestMapping("findAllSupplyBatch")
+    @RequestMapping("findAllStock")
     @ResponseBody
-    public List<ProductStockDTO> findPage(String currPage) {
+    public List<ProductStockDTO> findAllStock(String currPage) {
+        System.out.println(currPage);
         int page = Integer.parseInt(currPage);
         Pageable pageable = PageRequest.of(page - 1, 5);
-        List<StockEntity> stockList = stockService.findAllSupplyBatch(pageable);
+        List<StockEntity> stockList = stockService.findAllStock(pageable);
         List<ProductStockDTO> productStockDTOList = new ArrayList<ProductStockDTO>();
         for(StockEntity stockEntity : stockList){
-            ProductEntity productEntity = goodsService.findProductByProductId(stockEntity.getProductCode());
+            System.out.println(stockEntity.getProductCode());
+            ProductEntity productEntity = goodsService.findProductByProductCode(stockEntity.getProductCode());
             ProductStockDTO productStockDTO = new ProductStockDTO();
             productStockDTO.setProductId(productEntity.getProductId());
             productStockDTO.setProductCode(productEntity.getProductCode());

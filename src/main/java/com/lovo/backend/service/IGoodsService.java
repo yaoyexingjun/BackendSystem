@@ -25,5 +25,5 @@ public interface IGoodsService {
      * @param productCode
      * @return 商品对象
      */
-    public ProductEntity findProductByProductId(String productCode);
+    public ProductEntity findProductByProductCode(String productCode);
 }

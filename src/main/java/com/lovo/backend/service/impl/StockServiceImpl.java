@@ -37,7 +37,7 @@ public class StockServiceImpl implements IStockService {
         return totalPage;
     }
 
-    public List<StockEntity> findAllSupplyBatch(Pageable pageable) {
+    public List<StockEntity> findAllStock(Pageable pageable) {
         return stockDao.findAllStock(pageable);
     }
 }

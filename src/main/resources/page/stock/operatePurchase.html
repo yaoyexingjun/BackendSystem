@@ -67,14 +67,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="hidden-xs">551</td>
-                <td class="hidden-xs">DZ86926</td>
-                <td class="hidden-xs">旺旺雪饼</td>
-                <td class="hidden-xs">大小：30g；颜色：白色</td>
-                <td class="hidden-xs">副食品</td>
-                <td class="hidden-xs">110</td>
-                <td class="hidden-xs">150</td>
+            <tr  v-for="productStockDTO in info">
+                <td class="hidden-xs">{{productStockDTO.productId}}</td>
+                <td class="hidden-xs">{{productStockDTO.productCode}}</td>
+                <td class="hidden-xs">{{productStockDTO.productName}}</td>
+                <td class="hidden-xs">{{productStockDTO.specification}}</td>
+                <td class="hidden-xs">{{productStockDTO.productType}}</td>
+                <td class="hidden-xs">{{productStockDTO.stockNum}}</td>
+                <td class="hidden-xs">{{productStockDTO.threshold}}</td>
                 <td>
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="1" data-url="stock/purchaseNumberMF.html"><i class="layui-icon">&#xe642;</i>加入采购单</button>
@@ -82,22 +82,21 @@
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td class="hidden-xs">551</td>
-                <td class="hidden-xs">DZ86926</td>
-                <td class="hidden-xs">旺旺雪饼</td>
-                <td class="hidden-xs">大小：30g；颜色：白色</td>
-                <td class="hidden-xs">副食品</td>
-                <td class="hidden-xs">110</td>
-                <td class="hidden-xs">150</td>
-                <td>
-                    <div class="layui-inline">
-                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="1" data-url="stock/purchaseNumberMF.html"><i class="layui-icon">&#xe642;</i>加入采购单</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="2" data-url="stock/setThreshold.html"><i class="layui-icon">&#xe642;</i>设置阈值</button>
-                    </div>
-                </td>
-            </tr>
-
+            <!--<tr>-->
+                <!--<td class="hidden-xs">551</td>-->
+                <!--<td class="hidden-xs">DZ86926</td>-->
+                <!--<td class="hidden-xs">旺旺雪饼</td>-->
+                <!--<td class="hidden-xs">大小：30g；颜色：白色</td>-->
+                <!--<td class="hidden-xs">副食品</td>-->
+                <!--<td class="hidden-xs">110</td>-->
+                <!--<td class="hidden-xs">150</td>-->
+                <!--<td>-->
+                    <!--<div class="layui-inline">-->
+                        <!--<button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="1" data-url="stock/purchaseNumberMF.html"><i class="layui-icon">&#xe642;</i>加入采购单</button>-->
+                        <!--<button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="2" data-url="stock/setThreshold.html"><i class="layui-icon">&#xe642;</i>设置阈值</button>-->
+                    <!--</div>-->
+                <!--</td>-->
+            <!--</tr>-->
             </tbody>
         </table>
         <div id="operatePurchase-page" style="text-align: center;"></div>
@@ -116,7 +115,7 @@
             params.append("currPage",this.currPage);
             axios({
                 method: 'post',
-                url:'/findAllSupplyBatch',
+                url:'/findAllStock',
                 data: params
             })
                 .then(response => (this.info = response.data))
@@ -160,7 +159,7 @@
                 /*判断不是进入页面,而且是手动翻页的时候执行*/
                 if (!first){
                     $.ajax({
-                        url:"/findAllSupplyBatch",
+                        url:"/findAllStock",
                         data: param,
                         type: "post",
                         dataType: 'text json',

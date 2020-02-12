@@ -25,5 +25,5 @@ public interface IStockService {
      * 查询全部库存
      * @return 库存集合
      */
-    public List<StockEntity> findAllSupplyBatch(Pageable pageable);
+    public List<StockEntity> findAllStock(Pageable pageable);
 }
