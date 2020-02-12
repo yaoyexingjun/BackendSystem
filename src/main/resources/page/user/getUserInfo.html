@@ -25,75 +25,90 @@
     </style>
 </head>
 <body>
-<div class="wrap-container">
-    <form class="layui-form" style="width: 40%;padding-top: 10px;">
+<div class="wrap-container" id="all"  >
+
+    <form class="layui-form"  style="width: 40%;padding-top: 10px;"  >
         <div class="layui-form-item">
             <label class="layui-form-label">用户ID</label>
-            <div class="layui-input-block">
-                :<span>004</span>
+            <div class="layui-input-block" >
+                :<span>{{info.userId}}</span>
             </div>
         </div>
-        <div class="layui-form-item">
+        <div class="layui-form-item" >
             <label class="layui-form-label">用户名</label>
-            <div class="layui-input-block">
-                :<span>去去FF</span>
+            <div class="layui-input-block" >
+                :<span>{{info.userName}}</span>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-block">
-                :<span>456gahahTT</span>
+                :<span>{{info.userPwd}}</span>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">真实姓名</label>
             <div class="layui-input-block">
-                :<span>健康咖喱</span>
+                :<span>{{info.userRealName}}</span>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
-                :<span>男</span>
+                :<span>{{info.userSex}}</span>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">电话</label>
             <div class="layui-input-block">
-                :<span>135456135</span>
+                :<span>{{info.userPhone}}</span>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">公司名称</label>
             <div class="layui-input-block">
-                :<span>g去去FFgahha</span>
+                :<span>{{info.userCompanyName}}</span>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">用户状态</label>
             <div class="layui-input-block">
-                :<span>去去</span>
+                :<span>{{info.userState}}</span>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">营业执照图片</label>
+            <label class="layui-form-label">营业执照照片</label>
             <div class="layui-input-block">
-                <img src="#" width="150px" height="150px">
+                <!--<img src="#" alt="图片未加载进来" width="150px" height="150px">-->
+
+                <img :src="info.userBusinessLicenseImg" alt="图片未加载进来" width="150px" height="150px">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">身份证号</label>
             <div class="layui-input-block">
-                :<span>55864123564354</span>
+                :<span>{{info.userRealId}}</span>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">身份证图片</label>
+            <label class="layui-form-label">身份证照片</label>
             <div class="layui-input-block">
-                <img src="#" width="150px" height="150px">
+
+                <img :src="info.userImg" width="150px" height="150px">
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户冻结原因</label>
+            <div class="layui-input-block">
+                :<span>{{info.causerFreeze}}</span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户解冻原因</label>
+            <div class="layui-input-block">
+                :<span>{{info.thawReason}}</span>
+            </div>
+        </div>
     </form>
 
     <div class="layui-form" id="table-list">
@@ -105,17 +120,57 @@
 
 <script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
 <script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+<!--vue-->
+<script src="../../vue/Vue.js"></script>
+<!--使用ajax 需要导入-->
+<script  src="../../vue/vue-resource.js"></script>
+<!--获取URL的参数-->
+<script  src="../../vue/paragram.js"></script>
+<!--引入jquery-->
+<script src="../../vue/jQuery-2.2.2-min.js"></script>
+<!--引入ajax-->
+<script src="../../vue/axios.min.js"></script>
 <script>
-    //Demo
-    layui.use(['form'], function() {
-        var form = layui.form();
-        form.render();
-        //监听提交
-        form.on('submit(formDemo)', function(data) {
-            layer.msg(JSON.stringify(data.field));
-            return false;
-        });
+    var vue = new Vue({
+        el:"#all",
+        data:{
+             info:'',
+             userId:'',
+        },
+        mounted(){
+            var params = new URLSearchParams();
+            this.userId = GetQueryString("id");
+
+            //得到从主页面传过来的id
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+                if(r!=null)return  decodeURI(r[2]);return null;
+            }
+            //得到携带的userId到后端请求数据
+            params.append("userId",this.userId);
+            axios({
+                method: 'post',
+                url:'/findByUserId',
+                data: params
+            })
+                .then(response => (this.info = response.data))
+        .catch(function (error) { // 请求失败处理console.log(error);
+            });
+        }
     });
+
+    //Demo
+    // layui.use(['form'], function() {
+    //     var form = layui.form();
+    //     form.render();
+    //     //监听提交
+    //     form.on('submit(formDemo)', function(data) {
+    //         layer.msg(JSON.stringify(data.field));
+    //         return false;
+    //     });
+    // });
 </script>
 </body>
 </html>

@@ -79,10 +79,10 @@
                 <td class="hidden-xs">{{item.userState}}</td>
                 <td>
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="01" data-url="user/freezingReason.html"><i class="layui-icon">&#xe642;</i>冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" data-id="02" data-url="updateUser.html"><i class="layui-icon">&#xe642;</i>修改</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="03" data-url="user/clearFreezingReason.html"><i class="layui-icon">&#xe642;</i>解除冻结</button>
-                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" data-id="02" data-url="getUserInfo.html" @click="getUserDetail(item.userId)"><i class="layui-icon">&#xe615;</i>查看详情</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" :data-id="item.userId" data-url="user/freezingReason.html"><i class="layui-icon">&#xe642;</i>冻结</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" :data-id="item.userId" data-url="updateUser.html"><i class="layui-icon">&#xe642;</i>修改</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" :data-id="item.userId" data-url="user/clearFreezingReason.html"><i class="layui-icon">&#xe642;</i>解除冻结</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" :data-id="item.userId" data-url="getUserInfo.html" ><i class="layui-icon">&#xe615;</i>查看详情</button>
                     </div>
                 </td>
             </tr>
@@ -157,7 +157,18 @@
                 });
             },
             getUserDetail:function (userId) {
-                alert(userId)
+            //     alert(userId)
+            //     var params = new URLSearchParams();
+            //     params.append("userId",userId);
+            //     axios({
+            //         method: 'post',
+            //         url:'/updateSupplyBatchRecord',
+            //         data: params
+            //     })
+            //         .then(response => (this.information = response.data))
+            // .catch(function (error) { // 请求失败处理console.log(error);
+            //     });
+            //     window.location.reload();
             }
 
         },
