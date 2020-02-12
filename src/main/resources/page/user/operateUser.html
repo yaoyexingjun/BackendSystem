@@ -9,6 +9,17 @@
     <title>用户操作</title>
     <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
+    <!--<link rel="stylesheet" type="text/css" href="../../layuiadmin/layui/css/layui.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="../../layuiadmin/style/admin.css"/>-->
+    <script src="../../vue/jQuery-2.2.2-min.js"></script>
+    <!--<script src="../../layuiadmin/layui/layui.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="../../vue/Vue.js"></script>
+    <script src="../../vue/axios.min.js"></script>
+    <!--<script  src="../../vue/vue-resource.js"></script>-->
+    <!--<script  src="../../vue/paragram.js"></script>-->
+    <script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/main.js" type="text/javascript" charset="utf-8"></script>
     <style>
         #operateUser-page{
             left: 32%;
@@ -22,7 +33,7 @@
 </head>
 
 <body>
-<div class="page-content-wrap">
+<div class="page-content-wrap" id="all">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <span style="width: 30px;height: 8px">用户状态</span>
@@ -59,14 +70,23 @@
             </tr>
             </thead>
             <tbody>
-                <tr v-for>
-
-                </tr>
+            <tr v-for="item in list">
+                <td class="hidden-xs">{{item.userId}}</td>
+                <td class="hidden-xs">{{item.userName}}</td>
+                <td class="hidden-xs">{{item.userRealName}}</td>
+                <td class="hidden-xs">{{item.userSex}}</td>
+                <td class="hidden-xs">{{item.userCompanyName}}</td>
+                <td class="hidden-xs">{{item.userState}}</td>
+                <td>
+                    <div class="layui-inline">
+                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="01" data-url="user/freezingReason.html"><i class="layui-icon">&#xe642;</i>冻结</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" data-id="02" data-url="updateUser.html"><i class="layui-icon">&#xe642;</i>修改</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal add-btn" data-id="03" data-url="user/clearFreezingReason.html"><i class="layui-icon">&#xe642;</i>解除冻结</button>
+                        <button class="layui-btn layui-btn-mini layui-btn-normal go-btn" data-id="02" data-url="getUserInfo.html" @click="getUserDetail(item.userId)"><i class="layui-icon">&#xe615;</i>查看详情</button>
+                    </div>
+                </td>
+            </tr>
             </tbody>
-
-
-
-
 
 
             <!--
@@ -94,58 +114,130 @@
     </div>
 </div>
 
-<script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
-<script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
-<!--vue-->
-<script src="../../vue/Vue.js"></script>
-<!--使用ajax 需要导入-->
-<script  src="../../vue/vue-resource.js"></script>
-<!--获取URL的参数-->
-<script  src="../../vue/paragram.js"></script>
+
 
 <script>
-
-    new Vue({
-        el:"#selectId",
+    var userState = 0;
+    //var currPage = 1;
+    var vue=   new Vue({
+        el:"#all",
         data:{
             selectFind:"0",
             options: [ { text: '通过审核', value: '0' },
-                        { text: '通过审核已冻结', value: '1' },
-                        { text: '通过审核未冻结', value: '2' }]
+            { text: '通过审核已冻结', value: '1' },
+            { text: '通过审核未冻结', value: '2' }],
+            list:''
+        },
+        mounted(){
+            var params = new URLSearchParams();
+            params.append("userState",this.selectFind);
+            axios({
+                method: 'post',
+                url:'/findAllUser',
+                data: params
+            }).then(response => (this.list=response.data))
+        .catch(function (error) { // 请求失败处理
+                console.log(error);
+            });
         },
         methods:{
-            find:function(){
-                alert(this.selectFind)
+            find:function () {
+                var params = new URLSearchParams();
+                params.append("userState",this.selectFind);
+              //  params.append("currPage",currPage);
 
-                axios
-                    .get('/findAllUser')
-                    .then(response => (this.data=response.data.list))
+                userState=this.selectFind;
+                axios({
+                    method: 'post',
+                    url:'/findAllUser',
+                    data: params
+                }).then(response => (this.list=response.data))
             .catch(function (error) { // 请求失败处理
                     console.log(error);
                 });
+            },
+            getUserDetail:function (userId) {
+                alert(userId)
             }
-        }
 
+        },
     });
+    /*进入页面后自动获取总页数*/
+    var totalPage=0;
+    $.ajax({
+        url: "/getPage",
+        type: "post",
+        dataType: 'text json',
+        async: false,
+        success: function (data) {
+            totalPage=data;
+            page(totalPage);
+        }
+    });
+    /*条件分页代码*/
+    $("#selectId").change(function () {
+        var param = {
+            userState:userState,
+            //其它查询条件可在下面添加
+            //currPage:currPage
 
-    
-    layui.use(['form', 'jquery', 'layer', 'dialog','laypage'], function() {
-        var $ = layui.jquery;
-        var laypage = layui.laypage,
-            layer = layui.layer;
+    };
+        $.ajax({
+            url: "/byStateGetPage",
+            type: "post",
+            data: param,
+            dataType: 'text json',
+            async: false,
+            success: function (data) {
+                /*赋值页数给a*/
+                totalPage=data;
 
-        //分页
-        laypage({
-            cont: 'operateUser-page'
-            ,pages: 10
-            ,groups:4
-            ,skip:true
-            ,skin: '#1E9FFF',
-            jump:function (obj,first) {
-                var currPage = obj.curr;
+                /*用a重新赋值页面页数*/
+                page(totalPage)
             }
         });
     });
+
+    /*进入页面先默认翻页代码*/
+    function page(totalPage){
+        layui.use(['laypage','layer'],function () {
+            var laypage =layui.laypage,
+                layer = layui.layer;
+            //分页
+            laypage({
+                cont: 'operateUser-page'
+                ,pages: totalPage
+                ,last: totalPage
+                ,groups:5
+                ,skip:true
+                ,skin: '#1E9FFF',
+                /*下面是翻页面的时候就执行的/*/
+                jump:function (obj,first) {
+                    var param = {
+                        userState:vue.selectFind,
+                        currPage: obj.curr,
+
+                        //其它查询条件可在下面添加
+                    };
+                    /*判断不是进入页面,而且是手动翻页的时候执行*/
+                    if (!first){
+                        $.ajax({
+                            url:"/findAllUser",
+                            data: param,
+                            type: "post",
+                            dataType: 'text json',
+                            async: false,
+                            success: function (data){
+                                /*翻页后的内容赋值给vue,然后刷新在页面上*/
+                                vue.list = data;
+                            }
+                        })
+                    }
+                }
+            });
+        });
+
+    }
 
 </script>
 </body>
