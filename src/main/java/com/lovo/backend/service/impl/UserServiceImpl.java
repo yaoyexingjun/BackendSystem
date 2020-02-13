@@ -38,9 +38,18 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-    public void updateUserState(String userId, int userState,String causerFreeze,String thawReason) {
-        userDao.updateUserState(userId,userState,causerFreeze,thawReason);
+    public void updateUserStateAndCauserFreezeByUserId(String userId, int userState, String causerFreeze) {
+        userDao.updateUserStateAndCauserFreezeByUserId(userId,userState,causerFreeze);
     }
+
+
+    public void updateUserStateAndThawReasonByUserId(String userId, int userState, String thawReason) {
+        userDao.updateUserStateAndThawReasonByUserId(userId,userState,thawReason);
+    }
+
+//    public void updateUserState(String userId, int userState,String causerFreeze,String thawReason) {
+//        userDao.updateUserState(userId,userState,causerFreeze,thawReason);
+//    }
 
 
     public UserEntity findByUserNameAndUserPwd(String userName, String userPwd) {

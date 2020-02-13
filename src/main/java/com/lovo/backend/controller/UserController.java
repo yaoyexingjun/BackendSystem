@@ -30,11 +30,19 @@ public class UserController {
     public void updateUserPwdAndUserPhone(String userId,String userPwd,String userPhone){
         userService.updateUserPwdAndUserPhone(userId,userPwd,userPhone);
     }
-    //修改用户的状态及冻结原因、解除冻结原因
-    @RequestMapping("updateUserState")
+
+    //修改用户的状态及冻结原因
+    @RequestMapping("updateUserStateAndCauserFreeze")
     @ResponseBody
-    public void updateUserState(String userId, Integer userState,String causerFreeze,String thawReason){
-        userService.updateUserState(userId,userState,causerFreeze,thawReason);
+    public void updateUserStateAndCauserFreeze(String userId,String causerFreeze){
+
+        userService.updateUserStateAndCauserFreezeByUserId(userId,Integer.parseInt("2"),causerFreeze);
+    }
+    //修改用户的状态及解除冻结原因
+    @RequestMapping("updateUserStateAndThawReason")
+    @ResponseBody
+    public void updateUserStateAndThawReason(String userId,String thawReason){
+        userService.updateUserStateAndThawReasonByUserId(userId,Integer.parseInt("1"),thawReason);
     }
     //根据用户名和密码得到用户对象
     @RequestMapping("login")
@@ -79,27 +87,6 @@ public class UserController {
            List<UserEntity> list = userService.findByUserState(Integer.parseInt(userState),pageable);
             return list;
        }
-
-
-
-//        int totalCount=0;
-//        PageNationEntity<UserEntity> pageNationEntity = new PageNationEntity<UserEntity>();
-//        if(userState.equals("0")){
-//            //查询全部时得到总条数
-//             totalCount = userService.getTotalNumber();
-//            List<UserEntity> list = userService.findAllUser(pageable);
-//            pageNationEntity.setTotalCount(totalCount);
-//            pageNationEntity.setDataList(list);
-//            return pageNationEntity;
-//        }else {
-//            //根据状态查询数据时的总条数,即某种用户状态下数据总条数
-//             totalCount = userService.getTotalNumberByUserState(Integer.parseInt(userState));
-//            List<UserEntity> list = userService.findByUserState(Integer.parseInt(userState),pageable);
-//            pageNationEntity.setTotalCount(totalCount);
-//            pageNationEntity.setDataList(list);
-//            return pageNationEntity;
-//        }
-        //return null;
     }
     //根据用户的userId得到用户对象
     @RequestMapping("findByUserId")

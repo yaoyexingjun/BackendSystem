@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
     <style>
-        .layui-form-label{
+       .layui-form-label{
             font-size: 18px;
             width: 150px;
             float: left;
@@ -27,36 +27,90 @@
     </style>
 </head>
 <body>
-<div class="wrap-container">
-    <form class="layui-form" style="width: 90%;padding-top: 80px;">
+<div class="wrap-container" id="all">
+    <form class="layui-form" style="width: 90%;padding-top: 80px;" action="operateUser.html">
         <div class="layui-form-item">
             <label class="layui-form-label">解除冻结原因：</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required lay-verify="required" placeholder="请输入冻结原因" autocomplete="off" class="layui-input">
+                <input type="text" name="title" required lay-verify="required" v-model="thawReason" placeholder="请输入解除冻结原因" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" id="btn01">确认提交</button>
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" id="btn01" @click="thawFreeze()">确认提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary" id="btn02">重置</button>
             </div>
         </div>
     </form>
 </div>
-
 <script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+<!--vue-->
+<script src="../../vue/Vue.js"></script>
+<!--使用ajax 需要导入-->
+<script  src="../../vue/vue-resource.js"></script>
+<!--获取URL的参数-->
+<script  src="../../vue/paragram.js"></script>
+<!--引入jquery-->
+<script src="../../vue/jQuery-2.2.2-min.js"></script>
+<!--引入ajax-->
+<script src="../../vue/axios.min.js"></script>
 <script>
     //Demo
-    layui.use(['form'], function() {
-        var form = layui.form();
-        form.render();
-        //监听提交
-        form.on('submit(formDemo)', function(data) {
-            layer.msg(JSON.stringify(data.field));
-            return false;
-        });
+    // layui.use(['form'], function() {
+    //     var form = layui.form();
+    //     form.render();
+    //     //监听提交
+    //     form.on('submit(formDemo)', function(data) {
+    //         layer.msg(JSON.stringify(data.field));
+    //         return false;
+    //     });
+    // });
+
+    var vue = new Vue({
+        el:"#all",
+        data:{
+            info:'',
+            userId:'',
+            thawReason:'',
+            information:'',
+        },
+        mounted(){
+            this.userId = GetQueryString("id");
+
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+                if(r!=null)return  decodeURI(r[2]);return null;
+            }
+            axios({
+
+            })
+                .then(response => (this.info = response.data))
+        .catch(function (error) { // 请求失败处理console.log(error);
+            });
+        },
+        methods:{
+            thawFreeze:function(){
+
+                var params = new URLSearchParams();
+                params.append("userId",this.userId);
+                params.append("thawReason",this.thawReason);
+                axios({
+                    method: 'post',
+                    url:'/updateUserStateAndThawReason',
+                    data: params
+                })
+                    .then(response => (this.information = response.data))
+            .catch(function (error) { // 请求失败处理console.log(error);
+                });
+            }
+        }
     });
+
+
 </script>
 </body>
 </html>

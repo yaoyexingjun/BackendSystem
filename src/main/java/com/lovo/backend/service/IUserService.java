@@ -2,6 +2,7 @@ package com.lovo.backend.service;
 
 import com.lovo.backend.entity.UserEntity;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -22,13 +23,26 @@ public interface IUserService {
 
     public void updateUserPwdAndUserPhone(String userId,String userPwd,String userPhone);
 
+//    /**
+//     * 根据id修改用户的用户状态
+//     * @param userId 用户id
+//     * @param userState 用户状态
+//     */
+//
+//    public void updateUserState(String userId,int userState,String causerFreeze,String thawReason);
+
     /**
-     * 根据id修改用户的用户状态
+     * 根据id修改用户的用户状态为冻结
      * @param userId 用户id
      * @param userState 用户状态
      */
-
-    public void updateUserState(String userId,int userState,String causerFreeze,String thawReason);
+    public void updateUserStateAndCauserFreezeByUserId(String userId,int userState,String causerFreeze);
+    /**
+     * 根据id修改用户的用户状态为未冻结
+     * @param userId 用户id
+     * @param userState 用户状态
+     */
+    public void updateUserStateAndThawReasonByUserId(String userId,int userState,String thawReason);
 
     /**
      * 根据用户名和用户密码查询用户对象
@@ -78,7 +92,7 @@ public interface IUserService {
      * @param pageSize 每页记录数
      * @return 相应用户状态下的总页数
      */
-    public int getTotalNumberByUserState(int userState,int pageSize);
+     public int getTotalNumberByUserState(int userState,int pageSize);
 
     /**
      * 统计总记录条数

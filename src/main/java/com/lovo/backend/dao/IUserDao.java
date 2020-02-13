@@ -20,13 +20,22 @@ public interface IUserDao extends CrudRepository<UserEntity,Long> {
     public void updateUserPwdAndUserPhone(String userId,String userPwd,String userPhone);
 
     /**
-     * 根据id修改用户的用户状态
+     * 根据id修改用户的用户状态为冻结
      * @param userId 用户id
      * @param userState 用户状态
      */
-    @Query("update UserEntity set userState =?2,causerFreeze=?3,thawReason=?4 where userId =?1")
+    @Query("update UserEntity set userState =?2,causerFreeze=?3 where userId =?1")
     @Modifying
-    public void updateUserState(String userId,int userState,String causerFreeze,String thawReason);
+    public void updateUserStateAndCauserFreezeByUserId(String userId,int userState,String causerFreeze);
+    /**
+     * 根据id修改用户的用户状态为未冻结
+     * @param userId 用户id
+     * @param userState 用户状态
+     */
+    @Query("update UserEntity set userState =?2,thawReason=?3 where userId =?1")
+    @Modifying
+    public void updateUserStateAndThawReasonByUserId(String userId,int userState,String thawReason);
+
 
     /**
      * 根据用户名和用户密码查询用户对象
@@ -75,4 +84,13 @@ public interface IUserDao extends CrudRepository<UserEntity,Long> {
      */
     @Query("from UserEntity  where userId=?1")
     public UserEntity findByUserId(String userId);
+//---------------------------------------------
+//    /**
+//     * 根据id修改用户的用户状态为冻结
+//     * @param userId 用户id
+//     * @param userState 用户状态
+//     */
+//    @Query("update UserEntity set userState =?2,causerFreeze=?3,thawReason=?4 where userId =?1")
+//    @Modifying
+//    public void updateUserState(String userId,int userState,String causerFreeze,String thawReason);
 }
