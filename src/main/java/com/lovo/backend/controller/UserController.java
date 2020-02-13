@@ -18,30 +18,35 @@ import java.util.List;
 public class UserController {
     @Autowired
     private IUserService userService;
+    //添加用户的数据
     @RequestMapping("addUser")
     public void addUser( UserEntity userEntity){
        // System.out.println(userEntity.getUserBusinessLicenseImg());
        userService.registerUser(userEntity);
     }
+    //修改用户的密码和电话
     @RequestMapping("updateUserPwdAndUserPhone")
     public void updateUserPwdAndUserPhone(String userId,String userPwd,String userPhone){
         userService.updateUserPwdAndUserPhone(userId,userPwd,userPhone);
     }
+    //修改用户的状态及冻结原因、解除冻结原因
     @RequestMapping("updateUserState")
     public void updateUserState(String userId, Integer userState,String causerFreeze,String thawReason){
         userService.updateUserState(userId,userState,causerFreeze,thawReason);
     }
+    //根据用户名和密码得到用户对象
     @RequestMapping("login")
     public UserEntity findByUserNameAndUserPwd(String userName, String userPwd){
        return userService.findByUserNameAndUserPwd(userName,userPwd);
     }
+    //得到初始化时的总页数
    @RequestMapping("getPage")
     @ResponseBody
     public int getPage(){
         return userService.getTotalPage(2);
     }
 
-
+    //根据用户状态得到总页数
     @RequestMapping("byStateGetPage")
     @ResponseBody
     public int getTotalNumberByUserState(String userState ){
@@ -93,6 +98,7 @@ public class UserController {
 //        }
         //return null;
     }
+    //根据用户的userId得到用户对象
     @RequestMapping("findByUserId")
     @ResponseBody
     public UserEntity findByUserId(String userId){
