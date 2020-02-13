@@ -41,15 +41,13 @@
             </colgroup>
             <thead>
             <tr>
-                <th class="hidden-xs">批次ID</th>
-                <th class="hidden-xs">供货批次号</th>
+                <th class="hidden-xs">供货批次</th>
                 <th class="hidden-xs">供货记录</th>
                 <th class="hidden-xs">供货时间</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="supplyRecord in info">
-                <td class="hidden-xs">{{supplyRecord.supplyRecordId}}</td>
                 <td class="hidden-xs">{{supplyRecord.supplyBatch}}</td>
                 <td class="hidden-xs">{{supplyRecord.supplyRecord}}</td>
                 <td class="hidden-xs">{{supplyRecord.supplyRecordTime}}</td>
