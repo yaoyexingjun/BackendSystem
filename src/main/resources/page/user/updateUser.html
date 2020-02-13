@@ -8,6 +8,12 @@
     <title>修改用户信息</title>
     <link rel="stylesheet" type="text/css" href="../../static/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
+    <script src="../../vue/Vue.js"></script>
+    <script src="../../vue/axios.min.js"></script>
+    <script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../vue/jQuery-2.2.2-min.js"></script>
     <style>
         .layui-form-label{
             width: 150px;
@@ -37,80 +43,96 @@
     </style>
 </head>
 <body>
-<div class="wrap-container">
-    <form class="layui-form" style="width: 40%;padding-top: 10px;">
+<div class="wrap-container" id="all">
+    <form class="layui-form" style="width: 40%;padding-top: 10px;" action="operateUser.html">
         <div class="layui-form-item">
             <label class="layui-form-label">用户ID<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-               <input type="text" name="userId" required lay-verify="required" placeholder="请输入用户ID" autocomplete="off" class="layui-input" readonly="readonly">
+               <input type="text" name="userId"  :placeholder="info.userId" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">用户名<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="text" name="userName" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input" readonly="readonly">
+                <input type="text" name="userName"  :placeholder="info.userName" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">密码<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="text" name="userPwd" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text" name="userPwd" v-model="userPwd" required lay-verify="required" :placeholder="info.userPwd" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">真实姓名<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="text" name="userRealName" required lay-verify="required" placeholder="请输真实姓名" autocomplete="off" class="layui-input" readonly="readonly">
+                <input type="text" name="userRealName"  :placeholder="info.userRealName" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
 
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">性别<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="radio" name="status" value="1" title="男" disabled="disabled">
-                <input type="radio" name="status" value="0" title="女" disabled="disabled">
+                <!--<input type="radio" name="status" v-if="info.userSex == 男" value="1" title="男" disabled="disabled">-->
+                <!--<input type="radio" name="status" v-else="info.userSex == 女" value="0"  title="女" disabled="disabled">-->
+                <input type="text" name="userSex"  :placeholder="info.userSex" autocomplete="off" class="layui-input" readonly="readonly" >
+
+
+
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">电话<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="text" name="userPhone" required lay-verify="required" placeholder="请输入电话" autocomplete="off" class="layui-input">
+                <input type="text" name="userPhone" v-model="userPhone" required lay-verify="required" :placeholder="info.userPhone" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">公司名称<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="text" name="userCompanyName" required lay-verify="required" placeholder="请输入公司名称" autocomplete="off" class="layui-input" readonly="readonly">
+                <input type="text" name="userCompanyName"  :placeholder="info.userCompanyName" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">用户状态<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="text" name="userState" required lay-verify="required" placeholder="请输入用户状态" autocomplete="off" class="layui-input" readonly="readonly">
+                <input type="text" name="userState"  :placeholder="info.userState" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">营业执照图片<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <img src="#" width="150px" height="150px">
+                <img :src="info.userBusinessLicenseImg" width="150px" height="150px">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">身份证号<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <input type="text" name="userRealId" required lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input" readonly="readonly">
+                <input type="text" name="userRealId"  :placeholder="info.userRealId" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">身份证图片<span class="point-symbol">:</span></label>
             <div class="layui-input-block">
-                <img src="#" width="150px" height="150px">
+                <img :src="info.userImg" width="150px" height="150px">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">冻结原因<span class="point-symbol">:</span></label>
+            <div class="layui-input-block">
+                <input type="text" name="userRealId"  value="未冻结过" :placeholder="info.causerFreeze" autocomplete="off" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">解除冻结原因<span class="point-symbol">:</span></label>
+            <div class="layui-input-block">
+                <input type="text" name="userRealId"  value="无" :placeholder="info.thawReason" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" id="btn01">确认修改</button>
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="operateUser.html" id="btn01" @click="updateUserInfo()" data-url="operateUser.html" >确认修改</button>
                 <button type="reset" class="layui-btn layui-btn-primary" id="btn02">重置</button>
             </div>
         </div>
@@ -123,19 +145,70 @@
     </form>
 </div>
 
-<script src="../../static/layui/layui.js" type="text/javascript" charset="utf-8"></script>
-<script src="../../static/js/common.js" type="text/javascript" charset="utf-8"></script>
+
 <script>
     //Demo
-    layui.use(['form'], function() {
-        var form = layui.form();
-        form.render();
-        //监听提交
-        form.on('submit(formDemo)', function(data) {
-            layer.msg(JSON.stringify(data.field));
-            return false;
-        });
+    // layui.use(['form'], function() {
+    //     var form = layui.form();
+    //     form.render();
+    //     //监听提交
+    //     form.on('submit(formDemo)', function(data) {
+    //         layer.msg(JSON.stringify(data.field));
+    //         return false;
+    //     });
+    // });
+
+    var vue = new Vue({
+        el:"#all",
+        data:{
+            info:'',
+            userId:'',
+            userPwd:'',
+            userPhone:'',
+            information:'',
+        },
+        mounted(){
+            var params = new URLSearchParams();
+            this.userId = GetQueryString("id");
+            //得到从主页面传过来的id
+            function GetQueryString(name)
+            {
+                var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+                if(r!=null)return  decodeURI(r[2]);return null;
+            }
+            //得到携带的userId到后端请求数据
+            params.append("userId",this.userId);
+            axios({
+                method: 'post',
+                url:'/findByUserId',
+                data: params
+            })
+                .then(response => (this.info = response.data))
+        .catch(function (error) { // 请求失败处理console.log(error);
+            });
+        },
+         methods:{
+             updateUserInfo:function () {
+
+                 var params = new URLSearchParams();
+                 params.append("userId",this.userId);
+                 params.append("userPwd",this.userPwd);
+                 params.append("userPhone",this.userPhone);
+                 axios({
+                     method: 'post',
+                     url:'/updateUserPwdAndUserPhone',
+                     data: params
+                 })
+                     .then(response => (this.information = response.data))
+             .catch(function (error) { // 请求失败处理console.log(error);
+                 });
+
+             }
+
+         }
     });
+
 </script>
 </body>
 </html>

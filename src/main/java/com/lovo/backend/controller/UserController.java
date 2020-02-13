@@ -26,16 +26,19 @@ public class UserController {
     }
     //修改用户的密码和电话
     @RequestMapping("updateUserPwdAndUserPhone")
+    @ResponseBody
     public void updateUserPwdAndUserPhone(String userId,String userPwd,String userPhone){
         userService.updateUserPwdAndUserPhone(userId,userPwd,userPhone);
     }
     //修改用户的状态及冻结原因、解除冻结原因
     @RequestMapping("updateUserState")
+    @ResponseBody
     public void updateUserState(String userId, Integer userState,String causerFreeze,String thawReason){
         userService.updateUserState(userId,userState,causerFreeze,thawReason);
     }
     //根据用户名和密码得到用户对象
     @RequestMapping("login")
+    @ResponseBody
     public UserEntity findByUserNameAndUserPwd(String userName, String userPwd){
        return userService.findByUserNameAndUserPwd(userName,userPwd);
     }
