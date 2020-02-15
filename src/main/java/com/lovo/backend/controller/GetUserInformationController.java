@@ -19,9 +19,17 @@ public class GetUserInformationController {
         System.out.println(userEntity.getUserName());
         //userController.addUser(userEntity);
     }
-    //监听updateQueue对列
+    //监听修改用户信息updateQueue对列
     //@RabbitListener(queues = "updateQueue")
-    public void userUpdate(String userId,String userPwd,String userPhone){
+    public void userUpdate(String information){
+        String[] arr = information.split(",");
+        String userId=null;
+        String userPwd=null;
+        String userPhone=null;
+        for (int i=0;i<arr.length;i++){
+            System.out.println(arr[i]);
+        }
+        //
         System.out.println(userPhone);
     }
     //监听通过审核的冻结对列
