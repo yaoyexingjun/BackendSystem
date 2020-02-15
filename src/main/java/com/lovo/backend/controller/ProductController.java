@@ -3,6 +3,7 @@ package com.lovo.backend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lovo.backend.entity.ProductEntity;
 import com.lovo.backend.service.IProductService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,8 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private IProductService productService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @RequestMapping("findAllPage")
     public int findAllPage(){
@@ -52,14 +55,22 @@ public class ProductController {
     @RequestMapping("update")
     public List<ProductEntity> updateAndFindAll(String a,String b,String soushou,String select2){
       //a是物品编号 b是修改成的状态 soushou是产品类型 select2是当前状态
+        String up="";
        int state= Integer.parseInt(b);
         System.out.println(a+"_"+b+"_"+soushou+"_"+select2);
       if (state==1){
           productService.updateState(2,a);
+          up=2+","+a;
+          rabbitTemplate.convertAndSend("standUp","getUp",up);
+
       }else if(state==2){
             productService.updateState(3,a);
+          up=3+","+a;
+          rabbitTemplate.convertAndSend("standUp","getUp",up);
         }else if(state==3){
           productService.updateState(2,a);
+          up=2+","+a;
+          rabbitTemplate.convertAndSend("standUp","getUp",up);
       }
         int state2=0;
         if (select2!=""){

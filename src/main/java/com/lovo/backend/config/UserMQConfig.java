@@ -15,12 +15,19 @@ public class UserMQConfig {
     //注入工厂
     @Autowired
     private CachingConnectionFactory connectionFactory;
+
+    @Bean
+    public RabbitTemplate createRabbitTemplate(){
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        return rabbitTemplate;
+    }
+
+    //吴涛
     //创建点对点交换机
     @Bean
     public DirectExchange createFreezeExchange(){
         return new DirectExchange("UserFreezeDirect");
     }
-
     //创建冻结队列
     @Bean
     public Queue createQueueOne(){
@@ -42,13 +49,37 @@ public class UserMQConfig {
         return BindingBuilder.bind(createQueueTwo).to(createFreezeExchange).with("userThawFreezeQueue");
     }
 
+    //刘东
+    /*创建 上下架交换机*/
     @Bean
-    public RabbitTemplate createRabbitTemplate(){
-
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-
-        return rabbitTemplate;
-
+    public DirectExchange createStandUpAndDown() {
+        return new DirectExchange("standUp");
+    }
+    //创建 上下架队列
+    @Bean
+    public Queue createUpAndDown(){
+        return  new Queue("getStandUp");
+    }
+    //绑定 上下架队列
+    @Bean
+    public Binding bindingUp(Queue createUpAndDown,DirectExchange createStandUpAndDown){
+        return BindingBuilder.bind(createUpAndDown).to(createStandUpAndDown).with("getUp");
     }
 
+    //杨彬
+    //创建给前端的添加新商品交换机
+    @Bean
+    public DirectExchange createProductExchange(){
+        return new DirectExchange("productExchange");
+    }
+    //创建给前端的添加新商品队列
+    @Bean
+    public Queue createProductQueue(){
+        return new Queue("productQueue");
+    }
+    //绑定给前端的添加新商品交换机和队列
+    @Bean
+    public Binding bindingProductDirectExchange(Queue createProductQueue, DirectExchange createProductExchange){
+        return BindingBuilder.bind(createProductQueue).to(createProductExchange).with("toFrontProduct");
+    }
 }
