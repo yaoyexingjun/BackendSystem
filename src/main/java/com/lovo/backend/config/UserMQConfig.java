@@ -42,6 +42,23 @@ public class UserMQConfig {
         return BindingBuilder.bind(createQueueTwo).to(createFreezeExchange).with("userThawFreezeQueue");
     }
 
+    /*创建 上下架交换机*/
+    @Bean
+    public DirectExchange createStandUpAndDown() {
+        return new DirectExchange("standUp");
+    }
+
+    //创建 上下架队列
+    @Bean
+    public Queue createUpAndDown(){
+        return  new Queue("getStandUp");
+    }
+    //绑定 上下架队列
+    @Bean
+    public Binding bindingUp(Queue createUpAndDown,DirectExchange createStandUpAndDown){
+        return BindingBuilder.bind(createUpAndDown).to(createStandUpAndDown).with("getUp");
+    }
+
     @Bean
     public RabbitTemplate createRabbitTemplate(){
 
