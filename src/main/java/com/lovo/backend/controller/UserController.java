@@ -54,7 +54,7 @@ public class UserController {
    @RequestMapping("getPage")
     @ResponseBody
     public int getPage(){
-        return userService.getTotalPage(2);
+        return userService.getTotalPage(5);
     }
 
     //根据用户状态得到总页数
@@ -62,10 +62,10 @@ public class UserController {
     @ResponseBody
     public int getTotalNumberByUserState(String userState ){
         if (userState.equals("0")){
-            return userService.getTotalPage(2);
+            return userService.getTotalPage(5);
 
         }else {
-            return userService.getTotalNumberByUserState(Integer.parseInt(userState),2);
+            return userService.getTotalNumberByUserState(Integer.parseInt(userState),5);
         }
     }
     @RequestMapping("findAllUser")
@@ -73,7 +73,7 @@ public class UserController {
     public List<UserEntity> findAllUserByState(String userState,String currPage ){
        System.out.println(userState);
         System.out.println(currPage);
-      String  pageSize = "2";
+      String  pageSize = "5";
       //当前页为空，代表是初始化状态
        if (currPage == null){
             currPage="1";

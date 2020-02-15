@@ -100,7 +100,7 @@
                 params.append("thawReason",this.thawReason);
                 axios({
                     method: 'post',
-                    url:'/updateUserStateAndThawReason',
+                    url:'/sendUserThawFreezeInformation',
                     data: params
                 })
                     .then(response => (this.information = response.data))

@@ -30,17 +30,27 @@ public class GetUserInformationController {
             System.out.println(arr[i]);
         }
         //
-        System.out.println(userPhone);
+       // System.out.println(userPhone);
     }
     //监听通过审核的冻结对列
-   // @RabbitListener(queues = "freezeQueue")
+   // @RabbitListener(queues = "userQueueOne")
     public void userFreeze(String userId,String causerFreeze){
         System.out.println(causerFreeze);
     }
     //监听通过审核的解冻对列
-    //@RabbitListener(queues = "thawFreezeQueue")
+    //@RabbitListener(queues = "userQueueTwo")
     public void userThawFreeze(String userId,String thawReason){
         System.out.println(thawReason);
     }
-
+    //测试++++++++++++++++++++
+    //监听冻结userQueueOne
+//    @RabbitListener(queues = "userQueueOne")
+//    public void getOne(String information){
+//        System.out.println(information);
+//    }
+//    //监听解除冻结userQueueTwo
+//    @RabbitListener(queues = "userQueueTwo")
+//    public void getTwo(String information){
+//        System.out.println(information);
+//    }
 }

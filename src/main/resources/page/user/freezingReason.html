@@ -83,7 +83,7 @@
                 params.append("causerFreeze",this.causerFreeze);
                 axios({
                     method: 'post',
-                    url:'/updateUserStateAndCauserFreeze',
+                    url:'/sendUserFreezeInformation',
                     data: params
                 })
                     .then(response => (this.information = response.data))
