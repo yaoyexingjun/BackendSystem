@@ -13,6 +13,7 @@ public class UserEntity implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+   /**用户编号：前端传过来的。我当id用了。上面的id是建表时必须要有的*/
     @Column(name = "user_id" ,length = 32)
     private String userId;
     /**用户名*/
