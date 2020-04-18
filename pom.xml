@@ -90,7 +90,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.1.26</version>
+            <version>1.2.25</version>
         </dependency>
         <!-- 使用Jackson把Java对象转换成JSON字串 -->
         <dependency>
